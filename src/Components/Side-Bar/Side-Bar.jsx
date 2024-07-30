@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import User1 from "./../../assets/user-1.jpg";
 import "./Side-Bar.scss";
+import UserLogin from "./../../JSON/users.json";
 import {
   LuLayoutDashboard,
   FaAngleDown,
@@ -17,18 +19,35 @@ import {
 export const SideBar = ({ isSidebarOpen }) => {
   const currentYear = new Date().getFullYear();
   const [showNewRoom, setShowRooms] = useState(false);
+  const [user, setUser] = useState(null);
 
   const toggleRooms = (e) => {
     e.preventDefault();
     setShowRooms(!showNewRoom);
   };
+
+  useEffect(() => {
+    const loggedInUsername = localStorage.getItem("loggedInUsername");
+    if (loggedInUsername) {
+      const userData = UserLogin.find(
+        (user) => user.username === loggedInUsername
+      );
+      if (userData) {
+        setUser(userData);
+        console.log("Retrieved user data:", userData);
+      } else {
+        console.log("User not found");
+      }
+    }
+  }, []);
+
   return (
     <div className={`sidebar-container ${isSidebarOpen ? "open" : "closed"}`}>
       <div className="sidebar">
         <div className="sidebar__tittle">
           <img
             src={HotelLogo}
-            alt="Login Illustration"
+            alt="Hotel Logo"
             style={{
               width: "5rem",
               height: "auto",
@@ -41,49 +60,50 @@ export const SideBar = ({ isSidebarOpen }) => {
         <ul>
           <li>
             <LuLayoutDashboard />
-            <a href="#dashboards">Dashboard</a>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
             <SlKey />
-
-            <a className="rooms" href="#rooms">
+            <Link className="rooms" to="#" onClick={toggleRooms}>
               Rooms
-              {showNewRoom ? (
-                <FaAngleUp onClick={toggleRooms} />
-              ) : (
-                <FaAngleDown onClick={toggleRooms} />
-              )}
-            </a>
+              {showNewRoom ? <FaAngleUp /> : <FaAngleDown />}
+            </Link>
           </li>
           <div className="new__rooms">
             {showNewRoom && (
               <>
                 <MdOutlineAddCircleOutline />
-                <a href="#NewRoom">New Room</a>
+                <Link to="/new-room">New Room</Link>
               </>
             )}
           </div>
           <li>
             <TbCalendarCheck />
-            <a href="#bookings">Bookings</a>
+            <Link to="/bookings">Bookings</Link>
           </li>
           <li>
             <MdOutlinePersonOutline />
-            <a href="#guest">Guest</a>
+            <Link to="/guest">Guest</Link>
           </li>
           <li>
             <PiPuzzlePieceBold />
-            <a href="#users">Concierge</a>
+            <Link to="/concierge">Concierge</Link>
           </li>
         </ul>
-        <div className="user__info">
-          <img src={User1} alt="User" className="user__photo" />
-          <div className="user__info__details">
-            <h3>William Johanson</h3>
-            <p>williamjohn@mail.com</p>
-            <button className="user__info__details__btn"> Contact Us</button>
+        {user ? (
+          <div className="user__info">
+            <img src={user.image} alt="User" className="user__photo" />
+            <div className="user__info__details">
+              <h3>{user.full_name}</h3>
+              <p>{user.email}</p>
+              <button className="user__info__details__btn">Contact Us</button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="user__info">
+            <h3>Loading...</h3>
+          </div>
+        )}
         <div className="sidebar__footer">
           <h3>Travel Hotel Admin Dashboard</h3>
           <h4>© {currentYear} All rights reserved.</h4>

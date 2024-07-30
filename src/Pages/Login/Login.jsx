@@ -1,8 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
+import UserLogin from "./../../JSON/users.json";
 
+// Styled components
 const LoginPageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -64,7 +66,7 @@ const Button = styled.button`
   margin-top: 1rem;
 `;
 
-export function LoginPage() {
+export default function LoginPage() {
   // State Variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -74,10 +76,17 @@ export function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (username === "admin" && password === "admin") {
+    const user = UserLogin.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (user) {
+      localStorage.setItem("loggedInUsername", username);
+      console.log("Stored username:", localStorage.getItem("loggedInUsername"));
       navigate("/dashboard");
+      window.alert("Welcome " + user.full_name.toUpperCase());
     } else {
-      window.alert("Invalid Username or Password");
+      window.alert("Invalid Username and Password");
     }
   };
 
@@ -85,7 +94,6 @@ export function LoginPage() {
     <LoginPageContainer>
       <Header>
         <Title>
-          {" "}
           <img
             src={HotelLogo}
             alt="Login Illustration"
@@ -120,5 +128,3 @@ export function LoginPage() {
     </LoginPageContainer>
   );
 }
-
-export default LoginPage;

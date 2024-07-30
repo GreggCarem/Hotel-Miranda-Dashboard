@@ -17,9 +17,10 @@ export const HeaderMenu = ({ onToggleSidebar, isSidebarOpen }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    alert("Logging out...");
+    localStorage.removeItem("loggedInUser");
     navigate("/");
   };
+  console.log(localStorage.removeItem("loggedInUser"));
 
   return (
     <header className={`header__menu ${isSidebarOpen ? "sidebar__open" : ""}`}>
