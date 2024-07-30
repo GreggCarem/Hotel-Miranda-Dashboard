@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import {
   FiMail,
@@ -8,7 +9,77 @@ import {
   HiOutlineBell,
   MdOutlineKeyboardDoubleArrowRight,
 } from "../React-Icons";
-import "./Header-Menu.scss";
+
+const HeaderMenuContainer = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  box-shadow: 0px 3px 10px #00000005;
+
+  &.sidebar__open {
+    margin-left: 19rem;
+    width: -webkit-fill-available;
+  }
+`;
+
+const ToggleSidebarButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+`;
+
+const HeaderMenuTitle = styled.h1`
+  position: absolute;
+  left: 3rem;
+  top: 0.4rem;
+`;
+
+const HeaderIcons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  margin-right: 1rem;
+`;
+
+const IconContainer = styled.div`
+  position: relative;
+  margin-left: 1rem;
+
+  svg {
+    font-size: 1.5rem;
+    color: #333;
+  }
+`;
+
+const Badge = styled.span`
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #e23428;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LogoutButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+`;
 
 export const HeaderMenu = ({ onToggleSidebar, isSidebarOpen }) => {
   const [unreadMessages, setUnreadMessages] = useState(5);
@@ -20,36 +91,33 @@ export const HeaderMenu = ({ onToggleSidebar, isSidebarOpen }) => {
     localStorage.removeItem("loggedInUser");
     navigate("/");
   };
-  console.log(localStorage.removeItem("loggedInUser"));
 
   return (
-    <header className={`header__menu ${isSidebarOpen ? "sidebar__open" : ""}`}>
-      <button className="toggle__sidebar" onClick={onToggleSidebar}>
+    <HeaderMenuContainer className={isSidebarOpen ? "sidebar__open" : ""}>
+      <ToggleSidebarButton onClick={onToggleSidebar}>
         {isSidebarOpen ? (
           <RiArrowLeftDoubleFill />
         ) : (
           <MdOutlineKeyboardDoubleArrowRight />
         )}
-      </button>
-      <h1 className="header__menu__tittle">Dashboard</h1>
-      <div className="header__icons">
-        <div className="icon__container">
+      </ToggleSidebarButton>
+      <HeaderMenuTitle>Dashboard</HeaderMenuTitle>
+      <HeaderIcons>
+        <IconContainer>
           <FiMail />
-          {unreadMessages > 0 && (
-            <span className="badge">{unreadMessages}</span>
-          )}
-        </div>
+          {unreadMessages > 0 && <Badge>{unreadMessages}</Badge>}
+        </IconContainer>
 
-        <div className="icon__container">
+        <IconContainer>
           <HiOutlineBell />
           {currentMonthReservations > 0 && (
-            <span className="badge">{currentMonthReservations}</span>
+            <Badge>{currentMonthReservations}</Badge>
           )}
-        </div>
-        <button className="logout__button" onClick={handleLogout}>
+        </IconContainer>
+        <LogoutButton onClick={handleLogout}>
           <PiSignOutBold />
-        </button>
-      </div>
-    </header>
+        </LogoutButton>
+      </HeaderIcons>
+    </HeaderMenuContainer>
   );
 };

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
-import { DashboardMain } from "../../Components/Dashboard-main/Dashboard-main";
+import { KPI } from "../../Components/KPI/KPI";
+import "./Dashboard.scss";
 
 export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -11,14 +12,18 @@ export default function Dashboard() {
   };
 
   return (
-    <>
+    <div className="dashbaord-page">
       <SideBar isSidebarOpen={isSidebarOpen} />
 
       <HeaderMenu
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={toggleSidebar}
       />
-      <DashboardMain />
-    </>
+      <div
+        className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+      >
+        <KPI />
+      </div>
+    </div>
   );
 }

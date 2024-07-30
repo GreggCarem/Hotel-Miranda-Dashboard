@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
-import User1 from "./../../assets/user-1.jpg";
 import "./Side-Bar.scss";
 import UserLogin from "./../../JSON/users.json";
 import {
@@ -28,16 +27,15 @@ export const SideBar = ({ isSidebarOpen }) => {
 
   useEffect(() => {
     const loggedInUsername = localStorage.getItem("loggedInUsername");
-    if (loggedInUsername) {
-      const userData = UserLogin.find(
-        (user) => user.username === loggedInUsername
-      );
-      if (userData) {
-        setUser(userData);
-        console.log("Retrieved user data:", userData);
-      } else {
-        console.log("User not found");
-      }
+    const userData = loggedInUsername
+      ? UserLogin.find((user) => user.username === loggedInUsername)
+      : null;
+
+    if (userData) {
+      setUser(userData);
+      console.log("Retrieved user data:", userData);
+    } else {
+      console.log("No User");
     }
   }, []);
 

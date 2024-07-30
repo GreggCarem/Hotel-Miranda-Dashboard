@@ -67,10 +67,8 @@ const Button = styled.button`
 `;
 
 export default function LoginPage() {
-  // State Variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -84,10 +82,12 @@ export default function LoginPage() {
       localStorage.setItem("loggedInUsername", username);
       console.log("Stored username:", localStorage.getItem("loggedInUsername"));
       navigate("/dashboard");
-      window.alert("Welcome " + user.full_name.toUpperCase());
     } else {
-      window.alert("Invalid Username and Password");
+      window.alert(
+        "Invalid Username and Password try username admin, password admin"
+      );
     }
+    window.alert("Welcome and good luck: " + user.full_name.toUpperCase());
   };
 
   return (
