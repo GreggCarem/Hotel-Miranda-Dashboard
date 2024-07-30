@@ -3,7 +3,7 @@ import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import { DashboardMain } from "../../Components/Dashboard-main/Dashboard-main";
 
-export function Dashboard() {
+export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -22,5 +22,3 @@ export function Dashboard() {
     </>
   );
 }
-
-export default Dashboard;

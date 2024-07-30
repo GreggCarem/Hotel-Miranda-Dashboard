@@ -5,15 +5,15 @@
     "full_name": "Gregoire Careme",
     "job_position": "Manager",
     "job_description": "Overseeing daily operations and managing staff.",
-    "email": "gregor.ten1@gmail.com",
+    "email": "gregor@gmail.com",
     "phone": "555-005-6789",
     "start_date": "2022-11-20",
     "status": "Active",
-    "image": "./User-Images/person-2.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-2.jpeg?raw=true"
   },
   {
-    "username": "corey_taylor",
-    "password": "slipknot321",
+    "username": "coreytaylor",
+    "password": "slipknot",
     "full_name": "Corey Taylor",
     "job_position": "Vocalist",
     "job_description": "Performing lead vocals for Slipknot.",
@@ -21,7 +21,7 @@
     "phone": "555-002-3456",
     "start_date": "1997-01-01",
     "status": "Active",
-    "image": "https://example.com/images/corey_taylor.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/Corey-Taylor.jpeg?raw=true"
   },
   {
     "username": "rande_acosta",
@@ -33,7 +33,7 @@
     "phone": "555-005-6789",
     "start_date": "2020-09-07",
     "status": "Inactive",
-    "image": "https://example.com/images/rande_acosta.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/Rxnde-kozta.jpeg?raw=true"
   },
   {
     "username": "lvermer0",
@@ -45,7 +45,7 @@
     "phone": "211-452-7232",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "https://weebly.com/mai.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-1.jpeg?raw=true"
   },
   {
     "username": "mlakert1",
@@ -57,7 +57,7 @@
     "phone": "731-783-1863",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "https://blabgateway.com/dolionec.html"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-2.jpeg?raw=true"
   },
   {
     "username": "livshkin2",
@@ -69,7 +69,7 @@
     "phone": "366-219-1826",
     "start_date": "9/7/2020",
     "status": "Inactive",
-    "image": "https://nedfirst.gov/vestibulum.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-4.jpeg?raw=true"
   },
   {
     "username": "bobsidston3",
@@ -81,7 +81,7 @@
     "phone": "573-502-6077",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "https://stimlybuy.com/maecenas.jpg"
+    "image": "https://raw.githubusercontent.com/GreggCarem/Hotel-Miranda-Dashboard/main/src/JSON/User-Images/person-5.avif"
   },
   {
     "username": "msaward4",
@@ -93,7 +93,7 @@
     "phone": "322-125-5127",
     "start_date": "9/7/2020",
     "status": "Inactive",
-    "image": "https://aulactref.com/augue.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-6.jpeg?raw=true"
   },
   {
     "username": "caluetta5",
@@ -105,7 +105,7 @@
     "phone": "249-946-8672",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "https://athena.co.jp/donec.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-1.jpeg?raw=true"
   },
   {
     "username": "tdinnies6",
@@ -117,7 +117,7 @@
     "phone": "719-856-9874",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "https://aed.tu.edu/aenean.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-4.jpeg?raw=true"
   },
   {
     "username": "bhonn7",
@@ -129,6 +129,6 @@
     "phone": "316-358-6911",
     "start_date": "9/7/2020",
     "status": "Inactive",
-    "image": "https://eid.org/justo.jpg"
+    "image": "https://github.com/GreggCarem/Hotel-Miranda-Dashboard/blob/main/src/JSON/User-Images/person-6.jpeg?raw=true"
   }
 ]

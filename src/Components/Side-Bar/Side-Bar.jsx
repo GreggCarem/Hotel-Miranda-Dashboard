@@ -63,6 +63,10 @@ export const SideBar = ({ isSidebarOpen }) => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
+            <TbCalendarCheck />
+            <Link to="/bookings">Bookings</Link>
+          </li>
+          <li>
             <SlKey />
             <Link className="rooms" to="#" onClick={toggleRooms}>
               Rooms
@@ -77,17 +81,14 @@ export const SideBar = ({ isSidebarOpen }) => {
               </>
             )}
           </div>
-          <li>
-            <TbCalendarCheck />
-            <Link to="/bookings">Bookings</Link>
-          </li>
+
           <li>
             <MdOutlinePersonOutline />
-            <Link to="/guest">Guest</Link>
+            <Link to="/contacts">Contacts</Link>
           </li>
           <li>
             <PiPuzzlePieceBold />
-            <Link to="/concierge">Concierge</Link>
+            <Link to="/users">Users</Link>
           </li>
         </ul>
         {user ? (
@@ -96,7 +97,7 @@ export const SideBar = ({ isSidebarOpen }) => {
             <div className="user__info__details">
               <h3>{user.full_name}</h3>
               <p>{user.email}</p>
-              <button className="user__info__details__btn">Contact Us</button>
+              <button className="user__info__details__btn">Edit</button>
             </div>
           </div>
         ) : (
