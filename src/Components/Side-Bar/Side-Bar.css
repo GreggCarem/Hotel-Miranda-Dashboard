@@ -150,15 +150,22 @@ body {
 .new__rooms a {
   text-decoration: none;
   color: #799283;
-  margin-left: 0.625rem;
+  margin-left: -0.7rem;
   flex-grow: 1;
-}
-.new__rooms:hover, .new__rooms.selected, .new__rooms.selected img {
-  color: #ff1100;
-  border-left: 0.5rem solid #ff1100;
 }
 .new__rooms:hover a, .new__rooms.selected a {
   color: #ff1100;
+}
+.new__rooms svg {
+  position: relative;
+  top: -1.4rem;
+  right: -6rem;
+}
+
+.create__room svg {
+  position: relative;
+  top: 0.15rem;
+  left: -0.8rem;
 }
 
 .sidebar-container {

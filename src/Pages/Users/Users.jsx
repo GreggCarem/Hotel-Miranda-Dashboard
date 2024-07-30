@@ -36,7 +36,6 @@ export default function Users() {
   return (
     <div className="users-page">
       <SideBar isSidebarOpen={isSidebarOpen} />
-
       <HeaderMenu
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={toggleSidebar}
@@ -44,12 +43,7 @@ export default function Users() {
       <div
         className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
       >
-        <div className="filters">
-          <button onClick={() => setFilter("all")}>All Employees</button>
-          <button onClick={() => setFilter("active")}>Active Employees</button>
-          <button onClick={() => setFilter("inactive")}>
-            Inactive Employees
-          </button>
+        <div className="search-bar">
           <input
             type="text"
             placeholder="Search user..."
@@ -57,25 +51,43 @@ export default function Users() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-
-        <div className="user-list">
-          {filteredUsers.map((user, index) => (
-            <div className="user-row" key={index}>
-              <img
-                className="user-photo"
-                src={user.image}
-                alt={user.full_name}
-              />
-              <div className="user-details">
-                <h3>{user.full_name}</h3>
-                <p>Joined on {user.joined_date}</p>
-                <p>{user.job_position}</p>
-                <p>{user.phone}</p>
-                <p>{user.status}</p>
-              </div>
-            </div>
-          ))}
+        <div className="filters">
+          <button onClick={() => setFilter("all")}>All Employees</button>
+          <button onClick={() => setFilter("active")}>Active Employees</button>
+          <button onClick={() => setFilter("inactive")}>
+            Inactive Employees
+          </button>
         </div>
+        <table className="users-table">
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Full Name</th>
+              <th>Joined Date</th>
+              <th>Job Position</th>
+              <th>Phone</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((user) => (
+              <tr key={user.id}>
+                <td>
+                  <img
+                    src={user.image}
+                    alt={user.full_name}
+                    className="user-photo"
+                  />
+                </td>
+                <td>{user.full_name}</td>
+                <td>{user.joined_date}</td>
+                <td>{user.job_position}</td>
+                <td>{user.phone}</td>
+                <td>{user.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

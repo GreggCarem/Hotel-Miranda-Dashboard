@@ -66,17 +66,17 @@ export const SideBar = ({ isSidebarOpen }) => {
           </li>
           <li>
             <SlKey />
-            <Link className="rooms" to="#" onClick={toggleRooms}>
+            <Link className="rooms" to="/rooms">
               Rooms
-              {showNewRoom ? <FaAngleUp /> : <FaAngleDown />}
             </Link>
           </li>
-          <div className="new__rooms">
+          <div className="new__rooms" onClick={toggleRooms}>
+            {showNewRoom ? <FaAngleUp /> : <FaAngleDown />}
             {showNewRoom && (
-              <>
+              <div className="create__room">
                 <MdOutlineAddCircleOutline />
-                <Link to="/new-room">New Room</Link>
-              </>
+                <Link to="/new-room">Create Room</Link>
+              </div>
             )}
           </div>
 

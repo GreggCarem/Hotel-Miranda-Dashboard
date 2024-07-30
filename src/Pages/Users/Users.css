@@ -2,59 +2,47 @@
   display: flex;
 }
 
-.main-content {
-  flex: 1;
+.main-content .search-bar {
+  margin-bottom: 1rem;
+}
+.main-content .search-bar input {
   padding: 1rem;
-  margin-top: 5rem;
+  width: 20%;
 }
-.main-content.sidebar-open {
-  margin-left: 0;
-}
-.main-content.sidebar-closed {
-  margin-left: -19rem;
-}
-
-.filters {
+.main-content .filters {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
 }
-.filters button {
+.main-content .filters button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  background-color: #bbbbbb;
+  color: #000000;
+  font-size: 0.875rem;
 }
-.filters input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.main-content .users-table {
+  width: 100%;
+  border-collapse: collapse;
 }
-
-.user-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.main-content .users-table thead {
+  background-color: #f4f4f4;
 }
-
-.user-row {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.main-content .users-table thead th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
 }
-
-.user-photo {
+.main-content .users-table tbody tr td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.main-content .users-table tbody tr td img.user-photo {
   width: 5rem;
   height: 5rem;
+  height: auto;
   object-fit: cover;
-  margin-right: 1rem;
-}
-
-.user-details {
-  display: flex;
-  flex-direction: row;
-  gap: 5rem;
 }/*# sourceMappingURL=Users.css.map */

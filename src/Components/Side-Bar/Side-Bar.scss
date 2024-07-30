@@ -172,20 +172,25 @@ body {
   a {
     text-decoration: none;
     color: #799283;
-    margin-left: 0.625rem;
+    margin-left: -0.7rem;
     flex-grow: 1;
-  }
-
-  &:hover,
-  &.selected,
-  &.selected img {
-    color: #ff1100;
-    border-left: 0.5rem solid #ff1100;
   }
 
   &:hover a,
   &.selected a {
     color: #ff1100;
+  }
+  svg {
+    position: relative;
+    top: -1.4rem;
+    right: -6rem;
+  }
+}
+.create__room {
+  svg {
+    position: relative;
+    top: 0.15rem;
+    left: -0.8rem;
   }
 }
 
