@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
@@ -81,13 +81,16 @@ export default function LoginPage() {
     if (user) {
       localStorage.setItem("loggedInUsername", username);
       console.log("Stored username:", localStorage.getItem("loggedInUsername"));
+      window.alert("Welcome and good luck: " + user.full_name.toUpperCase());
       navigate("/dashboard");
     } else {
-      window.alert(
-        "Invalid Username and Password try username admin, password admin"
+      window.confirm(
+        "Invalid Username and Password.                                             Click ok to see user name and password"
       );
+      {
+        window.alert("user:admin password:admin");
+      }
     }
-    window.alert("Welcome and good luck: " + user.full_name.toUpperCase());
   };
 
   return (

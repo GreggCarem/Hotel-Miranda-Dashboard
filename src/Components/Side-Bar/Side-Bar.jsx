@@ -33,7 +33,6 @@ export const SideBar = ({ isSidebarOpen }) => {
 
     if (userData) {
       setUser(userData);
-      console.log("Retrieved user data:", userData);
     } else {
       console.log("No User");
     }
@@ -100,7 +99,7 @@ export const SideBar = ({ isSidebarOpen }) => {
           </div>
         ) : (
           <div className="user__info">
-            <h3>Loading...</h3>
+            <h3>Loading</h3>
           </div>
         )}
         <div className="sidebar__footer">

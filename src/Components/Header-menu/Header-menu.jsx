@@ -88,8 +88,10 @@ export const HeaderMenu = ({ onToggleSidebar, isSidebarOpen }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("loggedInUser");
-    navigate("/");
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("loggedInUsername");
+      navigate("/");
+    }
   };
 
   return (

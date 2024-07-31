@@ -13,7 +13,7 @@ export default function Rooms() {
     setIsSidebarOpen(!isSidebarOpen);
   };
   useEffect(() => {
-    setRooms(roomData.rooms);
+    setRooms(roomData);
   }, []);
   const filteredRooms = rooms.filter(
     (room) =>
