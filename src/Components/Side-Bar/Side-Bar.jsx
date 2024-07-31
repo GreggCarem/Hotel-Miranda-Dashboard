@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import "./Side-Bar.scss";

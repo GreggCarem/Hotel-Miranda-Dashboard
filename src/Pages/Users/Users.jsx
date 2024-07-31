@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import UserLogin from "../../JSON/users.json";
@@ -43,20 +43,18 @@ export default function Users() {
       <div
         className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
       >
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search user..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
         <div className="filters">
           <button onClick={() => setFilter("all")}>All Employees</button>
           <button onClick={() => setFilter("active")}>Active Employees</button>
           <button onClick={() => setFilter("inactive")}>
             Inactive Employees
           </button>
+          <input
+            type="text"
+            placeholder="Search user..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
         <table className="users-table">
           <thead>
@@ -71,7 +69,7 @@ export default function Users() {
           </thead>
           <tbody>
             {filteredUsers.map((user) => (
-              <tr key={user.id}>
+              <tr key={user.username}>
                 <td>
                   <img
                     src={user.image}
