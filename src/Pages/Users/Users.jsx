@@ -22,8 +22,7 @@ export default function Users() {
     .filter((user) => {
       if (filter === "active") {
         return user.status.toLowerCase() === "active";
-      }
-      if (filter === "inactive") {
+      } else if (filter === "inactive") {
         return user.status.toLowerCase() === "inactive";
       }
       return true;
@@ -61,7 +60,7 @@ export default function Users() {
             <tr>
               <th>Photo</th>
               <th>Full Name</th>
-              <th>Joined Date</th>
+              <th>Start Date</th>
               <th>Job Position</th>
               <th>Phone</th>
               <th>Status</th>
@@ -78,7 +77,7 @@ export default function Users() {
                   />
                 </td>
                 <td>{user.full_name}</td>
-                <td>{user.joined_date}</td>
+                <td>{user.start_date}</td>
                 <td>{user.job_position}</td>
                 <td>{user.phone}</td>
                 <td>{user.status}</td>
