@@ -2,7 +2,7 @@
   {
     "guest": "John Doe",
     "reservationID": "123456",
-    "photo": "src/JSON/Rooms-Images/Room-1.webp",
+    "photo": " Rooms-Images/Room-1.webp",
     "orderDate": "2024-07-25",
     "checkIn": "2024-08-01",
     "checkOut": "2024-08-05",
@@ -14,7 +14,7 @@
   {
     "guest": "Jane Smith",
     "reservationID": "654321",
-    "photo": "src/JSON/Rooms-Images/Room-2.jpeg",
+    "photo": " Rooms-Images/Room-2.jpeg",
     "orderDate": "2024-07-20",
     "checkIn": "2024-07-30",
     "checkOut": "2024-08-02",
@@ -26,7 +26,7 @@
   {
     "guest": "Alice Johnson",
     "reservationID": "112233",
-    "photo": "src/JSON/Rooms-Images/Room-3.jpeg",
+    "photo": " Rooms-Images/Room-3.jpeg",
     "orderDate": "2024-07-15",
     "checkIn": "2024-07-25",
     "checkOut": "2024-07-30",
@@ -38,7 +38,7 @@
   {
     "guest": "Michael Brown",
     "reservationID": "334455",
-    "photo": "src/JSON/Rooms-Images/Room-4.jpeg",
+    "photo": " Rooms-Images/Room-4.jpeg",
     "orderDate": "2024-07-10",
     "checkIn": "2024-07-20",
     "checkOut": "2024-07-25",
@@ -50,7 +50,7 @@
   {
     "guest": "Emily White",
     "reservationID": "556677",
-    "photo": "src/JSON/Rooms-Images/Room-5.webp",
+    "photo": " Rooms-Images/Room-5.webp",
     "orderDate": "2024-07-05",
     "checkIn": "2024-07-15",
     "checkOut": "2024-07-20",
@@ -62,7 +62,7 @@
   {
     "guest": "Chris Green",
     "reservationID": "778899",
-    "photo": "src/JSON/Rooms-Images/Room-6.jpeg",
+    "photo": " Rooms-Images/Room-6.jpeg",
     "orderDate": "2024-06-30",
     "checkIn": "2024-07-10",
     "checkOut": "2024-07-15",
@@ -74,7 +74,7 @@
   {
     "guest": "Laura Black",
     "reservationID": "990011",
-    "photo": "src/JSON/Rooms-Images/Room-7.jpeg",
+    "photo": " Rooms-Images/Room-7.jpeg",
     "orderDate": "2024-06-25",
     "checkIn": "2024-07-05",
     "checkOut": "2024-07-10",
@@ -86,7 +86,7 @@
   {
     "guest": "David White",
     "reservationID": "223344",
-    "photo": "src/JSON/Rooms-Images/Room-.8.jpeg",
+    "photo": " Rooms-Images/Room-.8.jpeg",
     "orderDate": "2024-06-20",
     "checkIn": "2024-06-30",
     "checkOut": "2024-07-05",
@@ -98,7 +98,7 @@
   {
     "guest": "Susan Brown",
     "reservationID": "445566",
-    "photo": "src/JSON/Rooms-Images/Room-.9.jpeg",
+    "photo": " Rooms-Images/Room-.9.jpeg",
     "orderDate": "2024-06-15",
     "checkIn": "2024-06-25",
     "checkOut": "2024-06-30",
@@ -110,7 +110,7 @@
   {
     "guest": "Robert Johnson",
     "reservationID": "667788",
-    "photo": "src/JSON/Rooms-Images/Room-.10.webp",
+    "photo": " Rooms-Images/Room-.10.webp",
     "orderDate": "2024-06-10",
     "checkIn": "2024-06-20",
     "checkOut": "2024-06-25",

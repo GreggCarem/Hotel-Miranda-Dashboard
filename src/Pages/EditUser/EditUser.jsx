@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SpinnerImg from "../../assets/Spinner.gif";
-import UserLogin from "../../JSON/users.json";
+import UserLogin from "../../assets/users.json";
 
 const EditUserContainer = styled.div`
   display: flex;
@@ -53,10 +53,6 @@ const Button = styled.button`
 
 const DeleteButton = styled(Button)`
   background-color: #ff0000;
-
-  &:hover {
-    background-color: #cc0000;
-  }
 `;
 
 const Heading = styled.h1`

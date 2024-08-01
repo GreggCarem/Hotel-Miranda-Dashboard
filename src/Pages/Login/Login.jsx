@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
-import UserLogin from "./../../JSON/users.json";
+import UserLogin from "../../assets/users.json";
 
 // Styled components
 const LoginPageContainer = styled.div`

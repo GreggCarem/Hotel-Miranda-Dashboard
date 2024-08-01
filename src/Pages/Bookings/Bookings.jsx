@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
-import bookingData from "../../JSON/bookings.json";
+import bookingData from "../../assets/bookings.json";
 import "./Booking.scss";
 
 export default function Bookings() {

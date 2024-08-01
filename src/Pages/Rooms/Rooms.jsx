@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
-import roomData from "../../JSON/rooms.json";
+import roomData from "../../assets/rooms.json";
 import "./Rooms.scss";
 
 export default function Rooms() {

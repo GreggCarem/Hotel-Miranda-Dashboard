@@ -7,6 +7,7 @@ import CreateRoom from "./Pages/CreateRoom/CreateRoom";
 import PrivateRoute from "./Components/PrivateRoute";
 import Bookings from "./Pages/Bookings/Bookings";
 import EditUser from "./Pages/EditUser/EditUser";
+import Contacts from "./Pages/Contacts/Contacts";
 import "./App.css";
 
 function App() {
@@ -51,6 +52,15 @@ function App() {
           element={
             <PrivateRoute>
               <Users />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute>
+              <Contacts />
             </PrivateRoute>
           }
         />

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import "./Side-Bar.scss";
-import UserLogin from "./../../JSON/users.json";
+import UserLogin from "../../assets/users.json";
 import Spinner from "../../assets/Spinner.gif";
 import {
   LuLayoutDashboard,

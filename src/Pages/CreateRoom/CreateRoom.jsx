@@ -7,7 +7,7 @@ export default function CreateRoom() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [roomData, setRoomData] = useState({
-    photo: "src/JSON/Rooms-Images/Room-7.jpeg",
+    photo: "",
     roomNumber: "",
     id: "",
     bedType: "",

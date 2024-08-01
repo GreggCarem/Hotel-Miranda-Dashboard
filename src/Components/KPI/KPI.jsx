@@ -8,7 +8,7 @@ import {
   RiExpandRightLine,
 } from "../React-Icons";
 
-import reservationData from "../../JSON/bookings.json";
+import reservationData from "../../assets/bookings.json";
 
 export const KPI = () => {
   const [kpis, setKpis] = useState({

@@ -9,7 +9,7 @@
     "phone": "555-005-6789",
     "start_date": "2022-11-20",
     "status": "Active",
-    "image": "src/JSON/User-Images/person-2.png"
+    "image": " User-Images/person-2.png"
   },
   {
     "username": "coreytaylor",
@@ -21,7 +21,7 @@
     "phone": "555-002-3456",
     "start_date": "1997-01-01",
     "status": "Active",
-    "image": "src/JSON/User-Images/Corey-Taylor.jpeg"
+    "image": "  User-Images/Corey-Taylor.jpeg"
   },
   {
     "username": "rande_acosta",
@@ -33,7 +33,7 @@
     "phone": "555-005-6789",
     "start_date": "2020-09-07",
     "status": "Inactive",
-    "image": "src/JSON/User-Images/Rxnde-kozta.jpeg"
+    "image": "   User-Images/Rxnde-kozta.jpeg"
   },
   {
     "username": "lvermer0",
@@ -45,7 +45,7 @@
     "phone": "211-452-7232",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "src/JSON/User-Images/person-1.jpeg"
+    "image": "   User-Images/person-1.jpeg"
   },
   {
     "username": "mlakert1",
@@ -57,7 +57,7 @@
     "phone": "731-783-1863",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "src/JSON/User-Images/person-2.png"
+    "image": "   User-Images/person-2.png"
   },
   {
     "username": "livshkin2",
@@ -69,7 +69,7 @@
     "phone": "366-219-1826",
     "start_date": "9/7/2020",
     "status": "Inactive",
-    "image": "src/JSON/User-Images/person-3.jpeg"
+    "image": "   User-Images/person-3.jpeg"
   },
   {
     "username": "bobsidston3",
@@ -81,7 +81,7 @@
     "phone": "573-502-6077",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "src/JSON/User-Images/person-4.jpeg"
+    "image": "   User-Images/person-4.jpeg"
   },
   {
     "username": "msaward4",
@@ -93,7 +93,7 @@
     "phone": "322-125-5127",
     "start_date": "9/7/2020",
     "status": "Inactive",
-    "image": "src/JSON/User-Images/person-5.avif"
+    "image": "   User-Images/person-5.avif"
   },
   {
     "username": "caluetta5",
@@ -105,7 +105,7 @@
     "phone": "249-946-8672",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "src/JSON/User-Images/person-6.jpeg"
+    "image": "   User-Images/person-6.jpeg"
   },
   {
     "username": "tdinnies6",
@@ -117,7 +117,7 @@
     "phone": "719-856-9874",
     "start_date": "9/7/2020",
     "status": "Active",
-    "image": "src/JSON/User-Images/person-7.webp"
+    "image": "   User-Images/person-7.webp"
   },
   {
     "username": "bhonn7",
@@ -129,6 +129,6 @@
     "phone": "316-358-6911",
     "start_date": "9/7/2020",
     "status": "Inactive",
-    "image": "src/JSON/User-Images/person-8.jpeg"
+    "image": "   User-Images/person-8.jpeg"
   }
 ]

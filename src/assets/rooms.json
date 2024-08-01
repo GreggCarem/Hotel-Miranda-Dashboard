@@ -1,6 +1,6 @@
 [
   {
-    "photo": "src/JSON/Rooms-Images/Room-1.webp",
+    "photo": "Rooms-Images/Room-1.webp",
     "roomNumber": "101",
     "id": 9342,
     "bedType": "Double superior",
@@ -11,7 +11,7 @@
     "description": "Spacious Double Superior room with modern amenities and a comfortable double bed."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-2.jpeg",
+    "photo": "Rooms-Images/Room-2.jpeg",
     "roomNumber": "102",
     "id": 9343,
     "bedType": "King suite",
@@ -22,7 +22,7 @@
     "description": "Luxurious King Suite with a private balcony and exquisite amenities."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-3.jpeg",
+    "photo": "Rooms-Images/Room-3.jpeg",
     "roomNumber": "103",
     "id": 9344,
     "bedType": "Single standard",
@@ -33,7 +33,7 @@
     "description": "Cozy Single Standard room, ideal for solo travelers."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-4.jpeg",
+    "photo": "Rooms-Images/Room-4.jpeg",
     "roomNumber": "104",
     "id": 9345,
     "bedType": "Double deluxe",
@@ -44,7 +44,7 @@
     "description": "Elegant Double Deluxe room with additional amenities for a comfortable stay."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-5.webp",
+    "photo": "Rooms-Images/Room-5.webp",
     "roomNumber": "105",
     "id": 9346,
     "bedType": "Queen room",
@@ -55,7 +55,7 @@
     "description": "Stylish Queen Room with all essential facilities for a relaxing stay."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-6.jpeg",
+    "photo": "Rooms-Images/Room-6.jpeg",
     "roomNumber": "106",
     "id": 9347,
     "bedType": "Twin room",
@@ -66,7 +66,7 @@
     "description": "Comfortable Twin Room, perfect for friends or family staying together."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-7.jpeg",
+    "photo": "Rooms-Images/Room-7.jpeg",
     "roomNumber": "107",
     "id": 9348,
     "bedType": "Suite",
@@ -77,7 +77,7 @@
     "description": "Premium Suite offering top-notch luxury and stunning views."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-.8.jpeg",
+    "photo": "Rooms-Images/Room-.8.jpeg",
     "roomNumber": "108",
     "id": 9349,
     "bedType": "Studio",
@@ -88,7 +88,7 @@
     "description": "Modern Studio room with a kitchenette for longer stays."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-.9.jpeg",
+    "photo": "Rooms-Images/Room-.9.jpeg",
     "roomNumber": "109",
     "id": 9350,
     "bedType": "Double superior",
@@ -99,7 +99,7 @@
     "description": "Spacious Double Superior room with modern amenities and a comfortable double bed."
   },
   {
-    "photo": "src/JSON/Rooms-Images/Room-.10.webp",
+    "photo": "Rooms-Images/Room-.10.webp",
     "roomNumber": "110",
     "id": 9351,
     "bedType": "King suite",

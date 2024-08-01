@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
-import UserLogin from "../../JSON/users.json";
+import UserLogin from "./../../assets/users.json";
 import "./Users.scss";
 
 export default function Users() {
