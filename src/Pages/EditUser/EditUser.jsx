@@ -53,6 +53,10 @@ const Button = styled.button`
 
 const DeleteButton = styled(Button)`
   background-color: #ff0000;
+
+  &:hover {
+    background-color: #cc0000;
+  }
 `;
 
 const Heading = styled.h1`

@@ -27,6 +27,8 @@ export default function Contacts() {
 
   const sortedReviews = [...reviews].sort(sortByDate);
 
+  const topReviews = sortedReviews.slice(0, 3); // 3 reviews
+
   return (
     <div className="reviews-page">
       <SideBar isSidebarOpen={isSidebarOpen} />
@@ -37,12 +39,22 @@ export default function Contacts() {
       <div
         className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
       >
+        <div className="top-reviews">
+          {topReviews.map((review) => (
+            <div key={review.id} className="review-card">
+              <h3>{review.name}</h3>
+              <p>{review.message}</p>
+              <small>{review.date}</small>
+            </div>
+          ))}
+        </div>
         <div className="sort-controls">
           <button onClick={() => setSortOrder("asc")}>Sort by Date Up</button>
           <button onClick={() => setSortOrder("desc")}>
             Sort by Date Down
           </button>
         </div>
+
         <table className="reviews-table">
           <thead>
             <tr>
