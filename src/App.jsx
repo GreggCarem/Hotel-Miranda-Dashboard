@@ -3,8 +3,10 @@ import LoginPage from "./Pages/Login/Login";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Users from "./Pages/Users/Users";
 import Rooms from "./Pages/Rooms/Rooms";
+import CreateRoom from "./Pages/CreateRoom/CreateRoom";
 import PrivateRoute from "./Components/PrivateRoute";
 import Bookings from "./Pages/Bookings/Bookings";
+import EditUser from "./Pages/EditUser/EditUser";
 import "./App.css";
 
 function App() {
@@ -37,10 +39,26 @@ function App() {
           }
         />
         <Route
+          path="/create-room"
+          element={
+            <PrivateRoute>
+              <CreateRoom />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/users"
           element={
             <PrivateRoute>
               <Users />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit-user/:id"
+          element={
+            <PrivateRoute>
+              <EditUser />
             </PrivateRoute>
           }
         />

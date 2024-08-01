@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import "./Side-Bar.scss";
 import UserLogin from "./../../JSON/users.json";
+import Spinner from "../../assets/Spinner.gif";
 import {
   LuLayoutDashboard,
   FaAngleDown,
@@ -74,7 +75,7 @@ export const SideBar = ({ isSidebarOpen }) => {
             {showNewRoom && (
               <div className="create__room">
                 <MdOutlineAddCircleOutline />
-                <Link to="/new-room">Create Room</Link>
+                <Link to="/create-room">Create Room</Link>
               </div>
             )}
           </div>
@@ -94,12 +95,14 @@ export const SideBar = ({ isSidebarOpen }) => {
             <div className="user__info__details">
               <h3>{user.full_name}</h3>
               <p>{user.email}</p>
-              <button className="user__info__details__btn">Edit</button>
+              <Link to={`/edit-user/${user.username}`}>
+                <button className="user__info__details__btn">Edit</button>
+              </Link>
             </div>
           </div>
         ) : (
           <div className="user__info">
-            <h3>Loading</h3>
+            <img src={Spinner} alt="loading" />
           </div>
         )}
         <div className="sidebar__footer">
