@@ -37,10 +37,10 @@ export default function EditUser() {
 
   const handleSave = () => {
     if (isNewUser) {
-      // Logic to create a new user
+   
       console.log("New user created:", user);
     } else {
-      // Logic to update an existing user
+      
       console.log("Updated user data:", user);
     }
     navigate("/users");
@@ -48,7 +48,7 @@ export default function EditUser() {
 
   const handleDelete = () => {
     if (!isNewUser) {
-      // Logic to delete the user
+  
       console.log("Deleted user:", user.username);
     }
     navigate("/users");

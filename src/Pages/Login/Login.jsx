@@ -75,7 +75,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5001/users?username=${username}&password=${password}`
+        `http://localhost:5002/users?username=${username}&password=${password}`
       );
       const users = await response.json();
 
