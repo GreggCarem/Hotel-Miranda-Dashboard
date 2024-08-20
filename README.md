@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+[<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -10,3 +10,4 @@ Currently, two official plugins are available:
 =======
 # Hotel-Miranda-Dashboard
 >>>>>>> e0a339d3639ebb8bf98be6289ca775b40bd093e0
+](http://imagebuddydashboard.s3-website.eu-north-1.amazonaws.com/)
