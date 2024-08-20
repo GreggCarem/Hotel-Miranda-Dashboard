@@ -8,7 +8,9 @@ import PrivateRoute from "./Components/PrivateRoute";
 import Bookings from "./Pages/Bookings/Bookings";
 import EditUser from "./Pages/EditUser/EditUser";
 import Contacts from "./Pages/Contacts/Contacts";
+import EditBooking from "./Pages/EditBooking/EditBooking";
 import "./App.css";
+import EditRoom from "./Pages/EditRoom/EditRoom";
 
 function App() {
   return (
@@ -32,10 +34,26 @@ function App() {
           }
         />
         <Route
+          path="/edit-booking/:reservationID"
+          element={
+            <PrivateRoute>
+              <EditBooking />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/rooms"
           element={
             <PrivateRoute>
               <Rooms />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit-room/:roomID"
+          element={
+            <PrivateRoute>
+              <EditRoom />
             </PrivateRoute>
           }
         />
@@ -65,7 +83,7 @@ function App() {
           }
         />
         <Route
-          path="/edit-user/:id"
+          path="/edit-user/:username"
           element={
             <PrivateRoute>
               <EditUser />

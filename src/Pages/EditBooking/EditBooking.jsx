@@ -1,57 +1,58 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import UserLogin from "./../../assets/users.json";
+import bookingData from "../../assets/bookings.json";
 
-export default function EditUser() {
-  const { username } = useParams();
+export default function EditBooking() {
+  const { reservationID } = useParams();
   const navigate = useNavigate();
-  const isNewUser = username === "new";
-  const [user, setUser] = useState({
-    full_name: "",
-    start_date: "",
-    job_position: "",
-    phone: "",
-    status: "active",
-    image: "",
-    username: "",
+  const isNewBooking = reservationID === "new";
+  const [booking, setBooking] = useState({
+    guest: "",
+    orderDate: "",
+    checkIn: "",
+    checkOut: "",
+    specialRequest: "",
+    room_type: "",
+    status: "Pending",
+    photo: "",
+    reservationID: "",
   });
 
   useEffect(() => {
-    if (!isNewUser) {
-      const foundUser = UserLogin.find((u) => u.username === username);
-      if (foundUser) {
-        setUser(foundUser);
+    if (!isNewBooking) {
+      const foundBooking = bookingData.find(
+        (b) => b.reservationID === reservationID
+      );
+      if (foundBooking) {
+        setBooking(foundBooking);
       } else {
-        console.error("User not found!");
+        console.error("Booking not found!");
       }
     }
-  }, [username, isNewUser]);
+  }, [reservationID, isNewBooking]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
+    setBooking((prevBooking) => ({
+      ...prevBooking,
       [name]: value,
     }));
   };
 
   const handleSave = () => {
-    if (isNewUser) {
-      // Logic to create a new user
-      console.log("New user created:", user);
+    if (isNewBooking) {
+      console.log("New booking created:", booking);
     } else {
-      // Logic to update an existing user
-      console.log("Updated user data:", user);
+      console.log("Updated booking data:", booking);
     }
-    navigate("/users");
+    navigate("/bookings");
   };
 
   const handleDelete = () => {
-    if (!isNewUser) {
-      // Logic to delete the user
-      console.log("Deleted user:", user.username);
+    if (!isNewBooking) {
+      console.log("Deleted booking:", booking.reservationID);
     }
-    navigate("/users");
+    navigate("/bookings");
   };
 
   const containerStyle = {
@@ -99,6 +100,16 @@ export default function EditUser() {
     boxSizing: "border-box",
   };
 
+  const textareaStyle = {
+    width: "100%",
+    padding: "8px",
+    fontSize: "16px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    boxSizing: "border-box",
+    resize: "vertical",
+  };
+
   const buttonStyle = {
     padding: "10px 20px",
     fontSize: "16px",
@@ -122,43 +133,65 @@ export default function EditUser() {
 
   return (
     <div style={containerStyle}>
-      <h2 style={titleStyle}>{isNewUser ? "Create New User" : "Edit User"}</h2>
+      <h2 style={titleStyle}>
+        {isNewBooking ? "Create New Booking" : "Edit Booking"}
+      </h2>
       <div style={formGroupStyle}>
-        <label style={labelStyle}>Full Name:</label>
+        <label style={labelStyle}>Guest:</label>
         <input
           type="text"
-          name="full_name"
-          value={user.full_name || ""}
+          name="guest"
+          value={booking.guest || ""}
           onChange={handleChange}
           style={inputStyle}
         />
       </div>
       <div style={formGroupStyle}>
-        <label style={labelStyle}>Start Date:</label>
+        <label style={labelStyle}>Order Date:</label>
         <input
           type="date"
-          name="start_date"
-          value={user.start_date || ""}
+          name="orderDate"
+          value={booking.orderDate || ""}
           onChange={handleChange}
           style={inputStyle}
         />
       </div>
       <div style={formGroupStyle}>
-        <label style={labelStyle}>Job Position:</label>
+        <label style={labelStyle}>Check In:</label>
         <input
-          type="text"
-          name="job_position"
-          value={user.job_position || ""}
+          type="date"
+          name="checkIn"
+          value={booking.checkIn || ""}
           onChange={handleChange}
           style={inputStyle}
         />
       </div>
       <div style={formGroupStyle}>
-        <label style={labelStyle}>Phone:</label>
+        <label style={labelStyle}>Check Out:</label>
+        <input
+          type="date"
+          name="checkOut"
+          value={booking.checkOut || ""}
+          onChange={handleChange}
+          style={inputStyle}
+        />
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Special Request:</label>
+        <textarea
+          name="specialRequest"
+          value={booking.specialRequest || ""}
+          onChange={handleChange}
+          rows="4"
+          style={textareaStyle}
+        />
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Room Type:</label>
         <input
           type="text"
-          name="phone"
-          value={user.phone || ""}
+          name="room_type"
+          value={booking.room_type || ""}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -167,29 +200,21 @@ export default function EditUser() {
         <label style={labelStyle}>Status:</label>
         <select
           name="status"
-          value={user.status || ""}
+          value={booking.status || ""}
           onChange={handleChange}
           style={selectStyle}
         >
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="Pending">Pending</option>
+          <option value="Booked">Booked</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Refund">Refund</option>
         </select>
-      </div>
-      <div style={formGroupStyle}>
-        <label style={labelStyle}>Photo URL:</label>
-        <input
-          type="text"
-          name="image"
-          value={user.image || ""}
-          onChange={handleChange}
-          style={inputStyle}
-        />
       </div>
       <div style={{ textAlign: "center" }}>
         <button onClick={handleSave} style={saveButtonStyle}>
-          {isNewUser ? "Create" : "Save"}
+          Save
         </button>
-        {!isNewUser && (
+        {!isNewBooking && (
           <button onClick={handleDelete} style={deleteButtonStyle}>
             Delete
           </button>

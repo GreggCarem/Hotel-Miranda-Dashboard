@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import roomData from "../../assets/rooms.json";
@@ -8,18 +9,29 @@ export default function Rooms() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [rooms, setRooms] = useState([]);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
   useEffect(() => {
     setRooms(roomData);
   }, []);
+
   const filteredRooms = rooms.filter(
     (room) =>
       room.roomNumber.includes(searchTerm) ||
       room.bedType.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleEdit = (id) => {
+    navigate(`/edit-room/${id}`);
+  };
+
+  const handleCreateNew = () => {
+    navigate("/edit-room/new");
+  };
 
   return (
     <div className="rooms-page">
@@ -29,8 +41,15 @@ export default function Rooms() {
         onToggleSidebar={toggleSidebar}
       />
       <div
-        className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+        className={`main-content ${
+          isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
       >
+        <div className="actions">
+          <button className="create-button" onClick={handleCreateNew}>
+            Create New Room
+          </button>
+        </div>
         <div className="search-bar">
           <input
             type="text"
@@ -55,7 +74,7 @@ export default function Rooms() {
           </thead>
           <tbody>
             {filteredRooms.map((room) => (
-              <tr key={room.id}>
+              <tr key={room.id} onClick={() => handleEdit(room.id)}>
                 <td>
                   <img
                     src={room.photo}

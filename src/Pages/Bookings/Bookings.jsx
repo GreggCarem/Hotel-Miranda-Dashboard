@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import bookingData from "../../assets/bookings.json";
+import { useNavigate } from "react-router-dom";
 import "./Booking.scss";
 
 export default function Bookings() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [bookings, setBookings] = useState([]);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -24,6 +26,20 @@ export default function Bookings() {
     return booking.status === selectedFilter;
   });
 
+  const handleEditClick = (reservationID) => {
+    navigate(`/edit-booking/${reservationID}`);
+  };
+
+  const handleDelete = (reservationID) => {
+    setBookings(
+      bookings.filter((booking) => booking.reservationID !== reservationID)
+    );
+  };
+
+  const handleCreate = () => {
+    navigate("/edit-booking/new");
+  };
+
   return (
     <div className="bookings-page">
       <SideBar isSidebarOpen={isSidebarOpen} />
@@ -32,7 +48,9 @@ export default function Bookings() {
         onToggleSidebar={toggleSidebar}
       />
       <div
-        className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+        className={`main-content ${
+          isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
       >
         <div className="filter-buttons">
           <button onClick={() => setSelectedFilter("All")}>All</button>
@@ -42,6 +60,12 @@ export default function Bookings() {
             Cancelled
           </button>
           <button onClick={() => setSelectedFilter("Refund")}>Refund</button>
+          <button
+            onClick={handleCreate}
+            style={{ backgroundColor: "#007bff", color: "#fff" }}
+          >
+            Create New Booking
+          </button>
         </div>
         <table className="bookings-table">
           <thead>
@@ -53,6 +77,7 @@ export default function Bookings() {
               <th>Special Request</th>
               <th>Room Type</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -63,6 +88,8 @@ export default function Bookings() {
                     src={booking.photo}
                     alt={`Guest ${booking.guest}`}
                     className="guest-photo"
+                    onClick={() => handleEditClick(booking.reservationID)}
+                    style={{ cursor: "pointer" }}
                   />
                   <div className="text">
                     <h1>{booking.guest}</h1>
@@ -79,6 +106,14 @@ export default function Bookings() {
                 </td>
                 <td>{booking.room_type}</td>
                 <td>{booking.status}</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(booking.reservationID)}
+                    style={{ color: "red" }}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

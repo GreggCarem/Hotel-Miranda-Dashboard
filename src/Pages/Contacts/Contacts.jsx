@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
-import ReviewsData from "./../../assets/contacts.json";
+import ReviewsData from "../../assets/contacts.json";
 import "./Contacts.scss";
 
 export default function Contacts() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [sortOrder, setSortOrder] = useState("desc");
+  const [currentPage, setCurrentPage] = useState(0);
+  const reviewsPerPage = 3;
 
   useEffect(() => {
     setReviews(ReviewsData);
@@ -18,16 +20,32 @@ export default function Contacts() {
   };
 
   const sortByDate = (a, b) => {
-    if (sortOrder === "asc") {
-      return new Date(a.date) - new Date(b.date);
-    } else {
-      return new Date(b.date) - new Date(a.date);
-    }
+    return sortOrder === "asc"
+      ? new Date(a.date) - new Date(b.date)
+      : new Date(b.date) - new Date(a.date);
   };
 
   const sortedReviews = [...reviews].sort(sortByDate);
 
-  const topReviews = sortedReviews.slice(0, 3); // 3 reviews
+  const totalPages = Math.ceil(sortedReviews.length / reviewsPerPage);
+
+  const nextSlide = () => {
+    setCurrentPage((prevPage) =>
+      prevPage === totalPages - 1 ? 0 : prevPage + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentPage((prevPage) =>
+      prevPage === 0 ? totalPages - 1 : prevPage - 1
+    );
+  };
+
+  const startIndex = currentPage * reviewsPerPage;
+  const currentReviews = sortedReviews.slice(
+    startIndex,
+    startIndex + reviewsPerPage
+  );
 
   return (
     <div className="reviews-page">
@@ -37,17 +55,28 @@ export default function Contacts() {
         onToggleSidebar={toggleSidebar}
       />
       <div
-        className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+        className={`main-content ${
+          isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
       >
-        <div className="top-reviews">
-          {topReviews.map((review) => (
-            <div key={review.id} className="review-card">
-              <h3>{review.name}</h3>
-              <p>{review.message}</p>
-              <small>{review.date}</small>
-            </div>
-          ))}
+        <div className="slider-container">
+          <button className="prev" onClick={prevSlide}>
+            &#10094;
+          </button>
+          <div className="review-slider">
+            {currentReviews.map((review) => (
+              <div key={review.id} className="review-card">
+                <h3>{review.name}</h3>
+                <p>{review.message}</p>
+                <small>{review.date}</small>
+              </div>
+            ))}
+          </div>
+          <button className="next" onClick={nextSlide}>
+            &#10095;
+          </button>
         </div>
+
         <div className="sort-controls">
           <button onClick={() => setSortOrder("asc")}>Sort by Date Up</button>
           <button onClick={() => setSortOrder("desc")}>
