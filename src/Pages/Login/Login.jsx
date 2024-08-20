@@ -1,10 +1,3 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
-import UserLogin from "../../assets/users.json";
-
-// Styled components
 const LoginPageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -66,30 +59,37 @@ const Button = styled.button`
   margin-top: 1rem;
 `;
 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
+import { useAuth } from "../../Components/Redux/userContext";
+
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { dispatch } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    const user = UserLogin.find(
-      (user) => user.username === username && user.password === password
-    );
-
-    if (user) {
-      localStorage.setItem("loggedInUsername", username);
-      console.log("Stored username:", localStorage.getItem("loggedInUsername"));
-      window.alert("Welcome and good luck: " + user.full_name.toUpperCase());
-      navigate("/dashboard");
-    } else {
-      window.confirm(
-        "Invalid Username and Password.                                             Click ok to see user name and password"
+    try {
+      const response = await fetch(
+        `http://localhost:5001/users?username=${username}&password=${password}`
       );
-      {
-        window.alert("user:admin password:admin");
+      const users = await response.json();
+
+      if (users.length > 0) {
+        const user = users[0];
+        dispatch({ type: "LOGIN", payload: user });
+        localStorage.setItem("loggedInUsername", username);
+        alert("Welcome and good luck: " + user.full_name.toUpperCase());
+        navigate("/dashboard");
+      } else {
+        alert("Invalid credentials");
       }
+    } catch (error) {
+      console.error("Login error:", error);
     }
   };
 

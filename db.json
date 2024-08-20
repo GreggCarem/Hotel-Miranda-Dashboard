@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin",
+      "full_name": "Gregoire Careme",
+      "job_position": "Manager",
+      "job_description": "Overseeing daily operations and managing staff.",
+      "email": "gregor@gmail.com",
+      "phone": "555-005-6789",
+      "start_date": "2022-11-20",
+      "status": "Active",
+      "image": "User-Images/person-2.png"
+    }
+  ]
+}

@@ -11,87 +11,90 @@ import Contacts from "./Pages/Contacts/Contacts";
 import EditBooking from "./Pages/EditBooking/EditBooking";
 import "./App.css";
 import EditRoom from "./Pages/EditRoom/EditRoom";
+import { AuthProvider } from "./Components/Redux/userContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/bookings"
-          element={
-            <PrivateRoute>
-              <Bookings />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/edit-booking/:reservationID"
-          element={
-            <PrivateRoute>
-              <EditBooking />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/rooms"
-          element={
-            <PrivateRoute>
-              <Rooms />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/edit-room/:roomID"
-          element={
-            <PrivateRoute>
-              <EditRoom />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/create-room"
-          element={
-            <PrivateRoute>
-              <CreateRoom />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/users"
-          element={
-            <PrivateRoute>
-              <Users />
-            </PrivateRoute>
-          }
-        />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/bookings"
+            element={
+              <PrivateRoute>
+                <Bookings />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-booking/:reservationID"
+            element={
+              <PrivateRoute>
+                <EditBooking />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/rooms"
+            element={
+              <PrivateRoute>
+                <Rooms />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-room/:roomID"
+            element={
+              <PrivateRoute>
+                <EditRoom />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/create-room"
+            element={
+              <PrivateRoute>
+                <CreateRoom />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <Users />
+              </PrivateRoute>
+            }
+          />
 
-        <Route
-          path="/contacts"
-          element={
-            <PrivateRoute>
-              <Contacts />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/edit-user/:username"
-          element={
-            <PrivateRoute>
-              <EditUser />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </Router>
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute>
+                <Contacts />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-user/:username"
+            element={
+              <PrivateRoute>
+                <EditUser />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

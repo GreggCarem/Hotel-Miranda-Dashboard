@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../Components/Redux/userContext";
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem("loggedInUsername");
-  return isAuthenticated ? children : <Navigate to="/" />;
+  const { state } = useAuth();
+  return state.isAuthenticated ? children : <Navigate to="/" />;
 };
 
 export default PrivateRoute;

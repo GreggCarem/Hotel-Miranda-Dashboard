@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import "./CreateRoom.scss";
@@ -57,7 +57,6 @@ export default function CreateRoom() {
   };
 
   const handleSave = () => {
-    // Handle saving the room data
     console.log("Room data saved:", roomData);
     setIsModalOpen(false);
   };

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import {
   FiMail,
   PiSignOutBold,
@@ -81,9 +80,10 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
+// eslint-disable-next-line react/prop-types
 export const HeaderMenu = ({ onToggleSidebar, isSidebarOpen }) => {
-  const [unreadMessages, setUnreadMessages] = useState(5);
-  const [currentMonthReservations, setCurrentMonthReservations] = useState(12);
+  const [unreadMessages] = useState(5);
+  const [currentMonthReservations] = useState(12);
 
   const navigate = useNavigate();
 
