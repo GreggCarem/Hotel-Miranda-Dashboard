@@ -1,82 +1,28 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import roomData from "../../assets/rooms.json";
-
-const Container = styled.div`
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: ${(props) => (props.delete ? "#dc3545" : "#007bff")};
-  color: #fff;
-  margin-left: ${(props) => (props.delete ? "10px" : "0")};
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 15px;
-`;
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import {
+  createRoom,
+  updateRoom,
+  deleteRoom,
+  selectAllRooms,
+  fetchRooms,
+  selectRoomsStatus,
+} from "../../Components/Redux/Slice/roomsSlice";
 
 export default function EditRoom() {
-  const { roomID } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const isNewRoom = roomID === "new";
+  const dispatch = useDispatch();
+  const isNewRoom = id === "new";
+  const rooms = useSelector(selectAllRooms);
+  const roomsStatus = useSelector(selectRoomsStatus);
+
   const [room, setRoom] = useState({
     photo: "",
     roomNumber: "",
-    id: "",
+    id: isNewRoom ? uuidv4() : "",
     bedType: "",
     facilities: [],
     rate: "",
@@ -86,17 +32,17 @@ export default function EditRoom() {
   });
 
   useEffect(() => {
-    if (!isNewRoom) {
-      const roomIdNumber = parseInt(roomID, 10);
-      const foundRoom = roomData.find((r) => r.id === roomIdNumber);
-      if (foundRoom) {
-        setRoom(foundRoom);
-      } else {
-        console.error(`Room with ID ${roomID} not found!`);
-        navigate("/rooms");
+    if (roomsStatus === "idle") {
+      dispatch(fetchRooms());
+    } else if (roomsStatus === "succeeded") {
+      if (!isNewRoom) {
+        const foundRoom = rooms.find((r) => String(r.id) === String(id));
+        if (foundRoom) {
+          setRoom(foundRoom);
+        }
       }
     }
-  }, [roomID, isNewRoom, navigate]);
+  }, [id, isNewRoom, rooms, roomsStatus, dispatch, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -115,111 +61,220 @@ export default function EditRoom() {
 
   const handleSave = () => {
     if (isNewRoom) {
-      console.log("New room created:", room);
+      dispatch(createRoom(room)).then(() => {
+        navigate("/rooms");
+      });
     } else {
-      console.log("Updated room data:", room);
+      dispatch(updateRoom(room)).then(() => {
+        navigate("/rooms");
+      });
     }
-    navigate("/rooms");
   };
 
   const handleDelete = () => {
     if (!isNewRoom) {
-      console.log("Deleted room:", room.id);
+      dispatch(deleteRoom(room.id)).then(() => {
+        navigate("/rooms");
+      });
     }
-    navigate("/rooms");
   };
 
+  if (roomsStatus === "loading") {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <Container>
-      <Title>{isNewRoom ? "Create New Room" : "Edit Room"}</Title>
-      <FormGroup>
-        <Label>Room Number:</Label>
-        <Input
+    <div style={containerStyle}>
+      <h2 style={titleStyle}>{isNewRoom ? "Create New Room" : "Edit Room"}</h2>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Room Number:</label>
+        <input
           type="text"
           name="roomNumber"
           value={room.roomNumber || ""}
           onChange={handleChange}
+          style={inputStyle}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>ID:</Label>
-        <Input
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>ID:</label>
+        <input
           type="text"
           name="id"
           value={room.id || ""}
           onChange={handleChange}
+          style={inputStyle}
+          disabled={!isNewRoom}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Bed Type:</Label>
-        <Input
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Bed Type:</label>
+        <input
           type="text"
           name="bedType"
           value={room.bedType || ""}
           onChange={handleChange}
+          style={inputStyle}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Facilities (comma-separated):</Label>
-        <Input
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Facilities (comma-separated):</label>
+        <input
           type="text"
           name="facilities"
           value={(room.facilities || []).join(", ")}
           onChange={handleChange}
+          style={inputStyle}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Rate:</Label>
-        <Input
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Rate:</label>
+        <input
           type="text"
           name="rate"
           value={room.rate || ""}
           onChange={handleChange}
+          style={inputStyle}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Offer Price:</Label>
-        <Input
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Offer Price:</label>
+        <input
           type="text"
           name="offerPrice"
           value={room.offerPrice || ""}
           onChange={handleChange}
+          style={inputStyle}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Status:</Label>
-        <Select name="status" value={room.status || ""} onChange={handleChange}>
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Status:</label>
+        <select
+          name="status"
+          value={room.status || ""}
+          onChange={handleChange}
+          style={selectStyle}
+        >
           <option value="Available">Available</option>
           <option value="Occupied">Occupied</option>
           <option value="Under Maintenance">Under Maintenance</option>
-        </Select>
-      </FormGroup>
-      <FormGroup>
-        <Label>Description:</Label>
-        <TextArea
+        </select>
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Description:</label>
+        <textarea
           name="description"
           value={room.description || ""}
           onChange={handleChange}
           rows="4"
+          style={textareaStyle}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Photo URL:</Label>
-        <Input
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Photo URL:</label>
+        <input
           type="text"
           name="photo"
           value={room.photo || ""}
           onChange={handleChange}
+          style={inputStyle}
         />
-      </FormGroup>
+      </div>
+      {room.photo && (
+        <div style={formGroupStyle}>
+          <label style={labelStyle}>Preview:</label>
+          <img
+            src={room.photo}
+            alt="Selected"
+            style={{ maxWidth: "100%", height: "auto", borderRadius: "4px" }}
+          />
+        </div>
+      )}
       <div style={{ textAlign: "center" }}>
-        <Button onClick={handleSave}>Save</Button>
+        <button onClick={handleSave} style={saveButtonStyle}>
+          Save
+        </button>
         {!isNewRoom && (
-          <Button delete onClick={handleDelete}>
+          <button onClick={handleDelete} style={deleteButtonStyle}>
             Delete
-          </Button>
+          </button>
         )}
       </div>
-    </Container>
+    </div>
   );
 }
+const containerStyle = {
+  padding: "20px",
+  maxWidth: "600px",
+  margin: "0 auto",
+  backgroundColor: "#f9f9f9",
+  borderRadius: "8px",
+  boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+};
+
+const titleStyle = {
+  fontSize: "24px",
+  fontWeight: "bold",
+  marginBottom: "20px",
+  textAlign: "center",
+};
+
+const formGroupStyle = {
+  marginBottom: "15px",
+};
+
+const labelStyle = {
+  display: "block",
+  marginBottom: "5px",
+  fontWeight: "600",
+  color: "#333",
+};
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  fontSize: "16px",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  boxSizing: "border-box",
+};
+
+const selectStyle = {
+  width: "100%",
+  padding: "8px",
+  fontSize: "16px",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  boxSizing: "border-box",
+};
+
+const textareaStyle = {
+  width: "100%",
+  padding: "8px",
+  fontSize: "16px",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  boxSizing: "border-box",
+  resize: "vertical",
+};
+
+const saveButtonStyle = {
+  padding: "10px 20px",
+  fontSize: "16px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  backgroundColor: "#007bff",
+  color: "#fff",
+};
+
+const deleteButtonStyle = {
+  padding: "10px 20px",
+  fontSize: "16px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  backgroundColor: "#dc3545",
+  color: "#fff",
+  marginLeft: "10px",
+};

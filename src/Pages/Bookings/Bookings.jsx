@@ -1,23 +1,36 @@
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
-import bookingData from "../../assets/bookings.json";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchBookings,
+  deleteBooking,
+  selectAllBookings,
+  selectBookingsStatus,
+  selectBookingsError,
+} from "../../Components/Redux/Slice/bookingsSlice";
 import "./Booking.scss";
 
 export default function Bookings() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All");
-  const [bookings, setBookings] = useState([]);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const bookings = useSelector(selectAllBookings);
+  const bookingStatus = useSelector(selectBookingsStatus);
+  const error = useSelector(selectBookingsError);
+
+  useEffect(() => {
+    if (bookingStatus === "idle") {
+      dispatch(fetchBookings());
+    }
+  }, [bookingStatus, dispatch]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  useEffect(() => {
-    setBookings(bookingData);
-  }, []);
 
   const filteredBookings = bookings.filter((booking) => {
     if (selectedFilter === "All") {
@@ -26,19 +39,84 @@ export default function Bookings() {
     return booking.status === selectedFilter;
   });
 
-  const handleEditClick = (reservationID) => {
-    navigate(`/edit-booking/${reservationID}`);
+  const handleEditClick = (id) => {
+    navigate(`/edit-booking/${id}`);
   };
 
-  const handleDelete = (reservationID) => {
-    setBookings(
-      bookings.filter((booking) => booking.reservationID !== reservationID)
-    );
+  const handleDelete = (id) => {
+    dispatch(deleteBooking(id)).then((response) => {
+      if (response.error) {
+        alert(`Failed to delete booking: ${response.error.message}`);
+      } else {
+        alert(`Booking ${id} deleted successfully.`);
+      }
+    });
   };
 
   const handleCreate = () => {
     navigate("/edit-booking/new");
   };
+
+  let content;
+
+  if (bookingStatus === "loading") {
+    content = <p>Loading...</p>;
+  } else if (bookingStatus === "succeeded") {
+    content = (
+      <table className="bookings-table">
+        <thead>
+          <tr>
+            <th>Guest</th>
+            <th>Order Date</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Special Request</th>
+            <th>Room Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredBookings.map((booking) => (
+            <tr key={booking.id}>
+              <td className="image__text__column">
+                <img
+                  src={booking.photo}
+                  alt={`Guest ${booking.guest}`}
+                  className="guest-photo"
+                  onClick={() => handleEditClick(booking.id)}
+                  style={{ cursor: "pointer" }}
+                />
+                <div className="text">
+                  <h1>{booking.guest}</h1>
+                </div>
+              </td>
+              <td>{booking.orderDate}</td>
+              <td>{booking.checkIn}</td>
+              <td>{booking.checkOut}</td>
+              <td>
+                <button onClick={() => window.alert(booking.specialRequest)}>
+                  View Notes
+                </button>
+              </td>
+              <td>{booking.room_type}</td>
+              <td>{booking.status}</td>
+              <td>
+                <button
+                  onClick={() => handleDelete(booking.id)}
+                  style={{ color: "red" }}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  } else if (bookingStatus === "failed") {
+    content = <p>{error}</p>;
+  }
 
   return (
     <div className="bookings-page">
@@ -67,57 +145,7 @@ export default function Bookings() {
             Create New Booking
           </button>
         </div>
-        <table className="bookings-table">
-          <thead>
-            <tr>
-              <th>Guest</th>
-              <th>Order Date</th>
-              <th>Check In</th>
-              <th>Check Out</th>
-              <th>Special Request</th>
-              <th>Room Type</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredBookings.map((booking) => (
-              <tr key={booking.reservationID}>
-                <td className="image__text__column">
-                  <img
-                    src={booking.photo}
-                    alt={`Guest ${booking.guest}`}
-                    className="guest-photo"
-                    onClick={() => handleEditClick(booking.reservationID)}
-                    style={{ cursor: "pointer" }}
-                  />
-                  <div className="text">
-                    <h1>{booking.guest}</h1>
-                    <h2>{booking.reservationID}</h2>
-                  </div>
-                </td>
-                <td>{booking.orderDate}</td>
-                <td>{booking.checkIn}</td>
-                <td>{booking.checkOut}</td>
-                <td>
-                  <button onClick={() => window.alert(booking.specialRequest)}>
-                    View Notes
-                  </button>
-                </td>
-                <td>{booking.room_type}</td>
-                <td>{booking.status}</td>
-                <td>
-                  <button
-                    onClick={() => handleDelete(booking.reservationID)}
-                    style={{ color: "red" }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {content}
       </div>
     </div>
   );

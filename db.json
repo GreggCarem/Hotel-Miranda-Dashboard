@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "admin",
       "password": "admin",
       "full_name": "Gregoire Careme",
@@ -11,7 +11,233 @@
       "phone": "555-005-6789",
       "start_date": "2022-11-20",
       "status": "Active",
-      "image": "User-Images/person-2.png"
+      "image": " User-Images/person-2.png"
+    },
+    {
+      "id": "2",
+      "username": "coreytaylor",
+      "password": "slipknot",
+      "full_name": "Corey Taylor",
+      "job_position": "Vocalist",
+      "job_description": "Performing lead vocals for Slipknot.",
+      "email": "corey.taylor@slipknot.com",
+      "phone": "555-002-3456",
+      "start_date": "1997-01-01",
+      "status": "Active",
+      "image": "  User-Images/Corey-Taylor.jpeg"
+    },
+    {
+      "id": "3",
+      "username": "rande_acosta",
+      "password": "rande123",
+      "full_name": "Rande Acostaaaa",
+      "job_position": "Manager",
+      "job_description": "Rap God",
+      "email": "rande.acosta@gmail.com",
+      "phone": "555-005-6789",
+      "start_date": "2020-09-07",
+      "status": "Inactive",
+      "image": "   User-Images/Rxnde-kozta.jpeg"
+    },
+    {
+      "id": "7",
+      "username": "bobsidston3",
+      "password": "bY7_0e1T7DV",
+      "full_name": "Barbee Obsidston",
+      "job_position": "Registered Nurse",
+      "job_description": "Enhanced analyzing capability",
+      "email": "bobsidston3@shop-pro.jp",
+      "phone": "573-502-6077",
+      "start_date": "9/7/2020",
+      "status": "Active",
+      "image": "   User-Images/person-4.jpeg"
+    },
+    {
+      "id": "8",
+      "username": "msaward4",
+      "password": "a003+Wi-L",
+      "full_name": "Marilee Saward",
+      "job_position": "Environmental Specialist",
+      "job_description": "Proactive eco-centric encoding",
+      "email": "msaward4@businessinder.com",
+      "phone": "322-125-5127",
+      "start_date": "9/7/2020",
+      "status": "Inactive",
+      "image": "   User-Images/person-5.avif"
+    },
+    {
+      "id": "9",
+      "username": "caluetta5",
+      "password": "kFC#w9vw*-5x",
+      "full_name": "Colleen Auletta",
+      "job_position": "Physical Therapy Assistant",
+      "job_description": "Cross-group area administration capacity",
+      "email": "caluetta5@skype.com",
+      "phone": "249-946-8672",
+      "start_date": "9/7/2020",
+      "status": "Active",
+      "image": "   User-Images/person-6.jpeg"
+    },
+    {
+      "id": "10",
+      "username": "tdinnies6",
+      "password": "#P1!3lW$z9cQ0",
+      "full_name": "Thia Dinnies",
+      "job_position": "Assistant Manager",
+      "job_description": "Sharable disintermediate success",
+      "email": "tdinnies6@va.gov",
+      "phone": "719-856-9874",
+      "start_date": "9/7/2020",
+      "status": "Active",
+      "image": "   User-Images/person-7.webp"
+    }
+  ],
+  "bookings": [
+    {
+      "guest": "Alddice Johnson",
+      "id": "112233",
+      "photo": " Rooms-Images/Room-3.jpeg",
+      "orderDate": "2024-07-15",
+      "checkIn": "2024-07-25",
+      "checkOut": "2024-07-30",
+      "specialRequest": "Late check-out requested.",
+      "room_type": "Presidential Suite",
+      "number": "303",
+      "status": "Booked"
+    },
+    {
+      "guest": "Michael Brown",
+      "id": "334455",
+      "photo": " Rooms-Images/Room-4.jpeg",
+      "orderDate": "2024-07-10",
+      "checkIn": "2024-07-20",
+      "checkOut": "2024-07-25",
+      "specialRequest": "Extra pillows.",
+      "room_type": "Luxury Room",
+      "number": "404",
+      "status": "Cancelled"
+    },
+    {
+      "guest": "Emily White",
+      "id": "556677",
+      "photo": " Rooms-Images/Room-5.webp",
+      "orderDate": "2024-07-05",
+      "checkIn": "2024-07-15",
+      "checkOut": "2024-07-20",
+      "specialRequest": "Vegetarian meals only.",
+      "room_type": "Family Room",
+      "number": "505",
+      "status": "Refund"
+    },
+    {
+      "guest": "Chris Green",
+      "id": "778899",
+      "photo": " Rooms-Images/Room-6.jpeg",
+      "orderDate": "2024-06-30",
+      "checkIn": "2024-07-10",
+      "checkOut": "2024-07-15",
+      "specialRequest": "Early check-in requested.",
+      "room_type": "Single Room",
+      "number": "606",
+      "status": "Refund"
+    },
+    {
+      "guest": "Laura Black",
+      "id": "990011",
+      "photo": " Rooms-Images/Room-7.jpeg",
+      "orderDate": "2024-06-25",
+      "checkIn": "2024-07-05",
+      "checkOut": "2024-07-10",
+      "specialRequest": "King-size bed.",
+      "room_type": "Double Room",
+      "number": "707",
+      "status": "Booked"
+    },
+    {
+      "guest": "Susan Brown",
+      "id": "445566",
+      "photo": " Rooms-Images/Room-.9.jpeg",
+      "orderDate": "2024-06-15",
+      "checkIn": "2024-06-25",
+      "checkOut": "2024-06-30",
+      "specialRequest": "Late check-out.",
+      "room_type": "Single Room",
+      "number": "909",
+      "status": "Booked"
+    },
+    {
+      "guest": "Robert Johnson",
+      "id": "667788",
+      "photo": " Rooms-Images/Room-.10.webp",
+      "orderDate": "2024-06-10",
+      "checkIn": "2024-06-20",
+      "checkOut": "2024-06-25",
+      "specialRequest": "Allergy-free room.",
+      "room_type": "Standard Room",
+      "number": "1010",
+      "status": "Refund"
+    }
+  ],
+  "rooms": [
+    {
+      "photo": "Rooms-Images/Room-4.jpeg",
+      "roomNumber": "104",
+      "id": "9345",
+      "bedType": "Double deluxe",
+      "facilities": [
+        "Air conditioning",
+        "Wi-Fi",
+        "Mini fridge"
+      ],
+      "rate": "$350 /night",
+      "offerPrice": "$315 /night",
+      "status": "Available",
+      "description": "Elegant Double Deluxe room with additional amenities for a comfortable stay."
+    },
+    {
+      "photo": "Rooms-Images/Room-.8.jpeg",
+      "roomNumber": "108",
+      "id": "9349",
+      "bedType": "Studio",
+      "facilities": [
+        "Wi-Fi",
+        "TV",
+        "Kitchenette"
+      ],
+      "rate": "$400 /night",
+      "offerPrice": "$360 /night",
+      "status": "Available",
+      "description": "Modern Studio room with a kitchenette for longer stays."
+    },
+    {
+      "photo": "Rooms-Images/Room-.9.jpeg",
+      "roomNumber": "109",
+      "id": "9350",
+      "bedType": "Double superior",
+      "facilities": [
+        "Air conditioning",
+        "Wi-Fi",
+        "TV"
+      ],
+      "rate": "$397 /night",
+      "offerPrice": "$357 /night",
+      "status": "Available",
+      "description": "Spacious Double Superior room with modern amenities and a comfortable double bed."
+    },
+    {
+      "photo": "Rooms-Images/Room-.10.webp",
+      "roomNumber": "110",
+      "id": "9351",
+      "bedType": "King suite",
+      "facilities": [
+        "Minibar",
+        "Wi-Fi",
+        "Balcony"
+      ],
+      "rate": "$500 /night",
+      "offerPrice": "$450 /night",
+      "status": "Available",
+      "description": "Luxurious King Suite with a private balcony and exquisite amenities."
     }
   ]
 }
