@@ -1,3 +1,9 @@
+import React, { useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
+import { useAuth } from "../../Components/Redux/authContext";
+
 const LoginPageContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -59,25 +65,33 @@ const Button = styled.button`
   margin-top: 1rem;
 `;
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
-import { useAuth } from "../../Components/Redux/authContext";
+interface User {
+  id: string;
+  username: string;
+  password: string;
+  full_name: string;
+  job_position: string;
+  job_description: string;
+  email: string;
+  phone: string;
+  start_date: string;
+  status: "Active" | "Inactive";
+  image: string;
+}
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const { dispatch } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5003/users?username=${username}&password=${password}`
+        `http://localhost:3000/users?username=${username}&password=${password}`
       );
-      const users = await response.json();
+      const users: User[] = await response.json();
 
       if (users.length > 0) {
         const user = users[0];

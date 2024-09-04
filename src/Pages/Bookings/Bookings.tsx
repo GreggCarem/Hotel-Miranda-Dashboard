@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
@@ -12,13 +13,25 @@ import {
 } from "../../Components/Redux/Slice/bookingsSlice";
 import "./Booking.scss";
 
+interface Booking {
+  id: string;
+  guest: string;
+  orderDate: string;
+  checkIn: string;
+  checkOut: string;
+  specialRequest: string;
+  room_type: string;
+  status: string;
+  photo: string;
+}
+
 export default function Bookings() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const bookings = useSelector(selectAllBookings);
+  const bookings: Booking[] = useSelector(selectAllBookings);
   const bookingStatus = useSelector(selectBookingsStatus);
   const error = useSelector(selectBookingsError);
 
@@ -39,12 +52,12 @@ export default function Bookings() {
     return booking.status === selectedFilter;
   });
 
-  const handleEditClick = (id) => {
+  const handleEditClick = (id: string) => {
     navigate(`/edit-booking/${id}`);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteBooking(id)).then((response) => {
+  const handleDelete = (id: string) => {
+    dispatch(deleteBooking(id)).then((response: any) => {
       if (response.error) {
         alert(`Failed to delete booking: ${response.error.message}`);
       } else {

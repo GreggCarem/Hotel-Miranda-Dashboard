@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const fetchRooms = createAsyncThunk("rooms/fetchRooms", async () => {
-  const response = await fetch("http://localhost:5003/rooms");
+  const response = await fetch("http://localhost:3000/rooms");
   if (!response.ok) {
     throw new Error("Failed to fetch rooms");
   }
@@ -15,7 +15,7 @@ export const fetchRooms = createAsyncThunk("rooms/fetchRooms", async () => {
 });
 
 export const createRoom = createAsyncThunk("rooms/createRoom", async (room) => {
-  const response = await fetch("http://localhost:5003/rooms", {
+  const response = await fetch("http://localhost:3000/rooms", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const createRoom = createAsyncThunk("rooms/createRoom", async (room) => {
 });
 
 export const updateRoom = createAsyncThunk("rooms/updateRoom", async (room) => {
-  const response = await fetch(`http://localhost:5003/rooms/${room.id}`, {
+  const response = await fetch(`http://localhost:3000/rooms/${room.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const updateRoom = createAsyncThunk("rooms/updateRoom", async (room) => {
 });
 
 export const deleteRoom = createAsyncThunk("rooms/deleteRoom", async (id) => {
-  const response = await fetch(`http://localhost:5003/rooms/${id}`, {
+  const response = await fetch(`http://localhost:3000/rooms/${id}`, {
     method: "DELETE",
   });
   if (!response.ok) {

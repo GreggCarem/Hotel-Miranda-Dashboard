@@ -11,20 +11,7 @@
       "phone": "555-005-6789",
       "start_date": "2022-11-20",
       "status": "Active",
-      "image": " User-Images/person-2.png"
-    },
-    {
-      "id": "2",
-      "username": "coreytaylor",
-      "password": "slipknot",
-      "full_name": "Corey Taylor",
-      "job_position": "Vocalist",
-      "job_description": "Performing lead vocals for Slipknot.",
-      "email": "corey.taylor@slipknot.com",
-      "phone": "555-002-3456",
-      "start_date": "1997-01-01",
-      "status": "Active",
-      "image": "  User-Images/Corey-Taylor.jpeg"
+      "image": "https://www.kroger.com/product/images/large/front/0000000004430"
     },
     {
       "id": "3",
@@ -94,7 +81,7 @@
   ],
   "bookings": [
     {
-      "guest": "Alddice Johnson",
+      "guest": "Alice Johnson",
       "id": "112233",
       "photo": " Rooms-Images/Room-3.jpeg",
       "orderDate": "2024-07-15",
@@ -176,9 +163,45 @@
       "room_type": "Standard Room",
       "number": "1010",
       "status": "Refund"
+    },
+    {
+      "id": "589b6887-0427-4995-a110-b7deb9b678ab",
+      "guest": "Jane Smithhhhh",
+      "orderDate": "",
+      "checkIn": "",
+      "checkOut": "",
+      "specialRequest": "",
+      "room_type": "",
+      "status": "Pending",
+      "photo": "https://www.kroger.com/product/images/large/front/0000000004430"
+    },
+    {
+      "id": "6337abb4-5a82-495f-8bf7-fc2afc8f1807",
+      "guest": "Jane Smithhhhh",
+      "orderDate": "",
+      "checkIn": "",
+      "checkOut": "",
+      "specialRequest": "",
+      "room_type": "",
+      "status": "Pending",
+      "photo": ""
     }
   ],
   "rooms": [
+    {
+      "photo": "Rooms-Images/Room-3.jpeg",
+      "roomNumber": "10323",
+      "id": "9344",
+      "bedType": "Single standard",
+      "facilities": [
+        "TV",
+        "Wi-Fi"
+      ],
+      "rate": "$250 /night",
+      "offerPrice": "$225 /night",
+      "status": "Available",
+      "description": "Cozy Single Standard room, ideal for solo travelers."
+    },
     {
       "photo": "Rooms-Images/Room-4.jpeg",
       "roomNumber": "104",
@@ -193,6 +216,50 @@
       "offerPrice": "$315 /night",
       "status": "Available",
       "description": "Elegant Double Deluxe room with additional amenities for a comfortable stay."
+    },
+    {
+      "photo": "Rooms-Images/Room-5.webp",
+      "roomNumber": "105",
+      "id": "9346",
+      "bedType": "Queen room",
+      "facilities": [
+        "TV",
+        "Wi-Fi",
+        "Safe"
+      ],
+      "rate": "$320 /night",
+      "offerPrice": "$288 /night",
+      "status": "Booked",
+      "description": "Stylish Queen Room with all essential facilities for a relaxing stay."
+    },
+    {
+      "photo": "Rooms-Images/Room-6.jpeg",
+      "roomNumber": "106",
+      "id": "9347",
+      "bedType": "Twin room",
+      "facilities": [
+        "Wi-Fi",
+        "Air conditioning"
+      ],
+      "rate": "$280 /night",
+      "offerPrice": "$252 /night",
+      "status": "Available",
+      "description": "Comfortable Twin Room, perfect for friends or family staying together."
+    },
+    {
+      "photo": "Rooms-Images/Room-7.jpeg",
+      "roomNumber": "107",
+      "id": "9348",
+      "bedType": "Suite",
+      "facilities": [
+        "Mini bar",
+        "Balcony",
+        "Wi-Fi"
+      ],
+      "rate": "$600 /night",
+      "offerPrice": "$540 /night",
+      "status": "Booked",
+      "description": "Premium Suite offering top-notch luxury and stunning views."
     },
     {
       "photo": "Rooms-Images/Room-.8.jpeg",

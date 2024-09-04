@@ -20,7 +20,9 @@ export default function Dashboard() {
         onToggleSidebar={toggleSidebar}
       />
       <div
-        className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+        className={`main-content ${
+          isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
       >
         <KPI />
       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
@@ -11,13 +11,25 @@ import {
 } from "../../Components/Redux/Slice/roomsSlice";
 import "./Rooms.scss";
 
+interface Room {
+  id: string;
+  roomNumber: string;
+  bedType: string;
+  facilities: string[];
+  rate: number;
+  offerPrice: number;
+  status: string;
+  description: string;
+  photo: string;
+}
+
 export default function Rooms() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const rooms = useSelector(selectAllRooms);
+  const rooms: Room[] = useSelector(selectAllRooms);
   const roomsStatus = useSelector(selectRoomsStatus);
   const error = useSelector(selectRoomsError);
 
@@ -37,7 +49,7 @@ export default function Rooms() {
       room.bedType.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleEdit = (id) => {
+  const handleEdit = (id: string) => {
     navigate(`/edit-room/${id}`);
   };
 

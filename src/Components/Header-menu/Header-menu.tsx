@@ -9,6 +9,11 @@ import {
   MdOutlineKeyboardDoubleArrowRight,
 } from "../React-Icons";
 
+interface HeaderMenuProps {
+  onToggleSidebar: () => void;
+  isSidebarOpen: boolean;
+}
+
 const HeaderMenuContainer = styled.header`
   display: flex;
   align-items: center;
@@ -80,10 +85,12 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
-// eslint-disable-next-line react/prop-types
-export const HeaderMenu = ({ onToggleSidebar, isSidebarOpen }) => {
-  const [unreadMessages] = useState(5);
-  const [currentMonthReservations] = useState(12);
+export const HeaderMenu: React.FC<HeaderMenuProps> = ({
+  onToggleSidebar,
+  isSidebarOpen,
+}) => {
+  const [unreadMessages] = useState<number>(5);
+  const [currentMonthReservations] = useState<number>(12);
 
   const navigate = useNavigate();
 

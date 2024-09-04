@@ -10,7 +10,7 @@ const initialState = {
 export const fetchBookings = createAsyncThunk(
   "bookings/fetchBookings",
   async () => {
-    const response = await fetch("http://localhost:5003/bookings");
+    const response = await fetch("http://localhost:3000/bookings");
     if (!response.ok) {
       throw new Error("Failed to fetch bookings");
     }
@@ -24,7 +24,7 @@ export const createBooking = createAsyncThunk(
     const newId = uuidv4();
     const newBooking = { ...booking, id: newId };
 
-    const response = await fetch("http://localhost:5003/bookings", {
+    const response = await fetch("http://localhost:3000/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const updateBooking = createAsyncThunk(
     }
 
     const response = await fetch(
-      `http://localhost:5003/bookings/${booking.id}`,
+      `http://localhost:3000/bookings/${booking.id}`,
       {
         method: "PUT",
         headers: {
@@ -70,7 +70,7 @@ export const deleteBooking = createAsyncThunk(
   "bookings/deleteBooking",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:5003/bookings/${id}`, {
+      const response = await fetch(`http://localhost:3000/bookings/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
