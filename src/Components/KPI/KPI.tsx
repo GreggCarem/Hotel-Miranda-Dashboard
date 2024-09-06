@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./KPI.scss";
-
+import React from "react";
 import {
   IoBedOutline,
   LuCalendarCheck2,
@@ -10,10 +10,23 @@ import {
 
 import reservationData from "../../assets/bookings.json";
 
+interface Reservation {
+  status: string;
+  checkIn: string;
+  checkOut: string;
+}
+
+interface Kpis {
+  reservations: number;
+  occupancy: string;
+  checkIns: number;
+  checkOuts: number;
+}
+
 export const KPI = () => {
-  const [kpis, setKpis] = useState({
+  const [kpis, setKpis] = useState<Kpis>({
     reservations: 0,
-    occupancy: 0,
+    occupancy: "0",
     checkIns: 0,
     checkOuts: 0,
   });
@@ -23,23 +36,30 @@ export const KPI = () => {
       const totalReservations = reservationData.length;
 
       const totalCheckIns = reservationData.reduce(
-        (acc, item) => acc + (item.status === "Booked" ? 1 : 0),
+        (acc: number, item: Reservation) =>
+          acc + (item.status === "Booked" ? 1 : 0),
         0
       );
       const totalCheckOuts = reservationData.reduce(
-        (acc, item) => acc + (item.status === "Booked" ? 1 : 0),
+        (acc: number, item: Reservation) =>
+          acc + (item.status === "Booked" ? 1 : 0),
         0
       );
 
       const now = new Date();
-      const totalDays = reservationData.reduce((acc, item) => {
-        const checkInDate = new Date(item.checkIn);
-        const checkOutDate = new Date(item.checkOut);
+      const totalDays = reservationData.reduce(
+        (acc: number, item: Reservation) => {
+          const checkInDate = new Date(item.checkIn);
+          const checkOutDate = new Date(item.checkOut);
 
-        const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
+          const days =
+            (checkOutDate.getTime() - checkInDate.getTime()) /
+            (1000 * 60 * 60 * 24);
 
-        return acc + (now >= checkInDate && now <= checkOutDate ? days : 0);
-      }, 0);
+          return acc + (now >= checkInDate && now <= checkOutDate ? days : 0);
+        },
+        0
+      );
 
       const totalOccupancy = totalDays ? (totalCheckIns / totalDays) * 100 : 0;
 

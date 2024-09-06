@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -10,16 +11,18 @@ import {
   fetchRooms,
   selectRoomsStatus,
 } from "../../Components/Redux/Slice/roomsSlice";
+import { AppDispatch } from "../../Components/Redux/store";
+import { Room } from "../../Resources/Interface/room";
 
 export default function EditRoom() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isNewRoom = id === "new";
   const rooms = useSelector(selectAllRooms);
   const roomsStatus = useSelector(selectRoomsStatus);
 
-  const [room, setRoom] = useState({
+  const [room, setRoom] = useState<Room>({
     photo: "",
     roomNumber: "",
     id: isNewRoom ? uuidv4() : "",
@@ -36,15 +39,17 @@ export default function EditRoom() {
       dispatch(fetchRooms());
     } else if (roomsStatus === "succeeded") {
       if (!isNewRoom) {
-        const foundRoom = rooms.find((r) => String(r.id) === String(id));
+        const foundRoom = rooms.find((r) => r.id === id);
         if (foundRoom) {
           setRoom(foundRoom);
         }
       }
     }
-  }, [id, isNewRoom, rooms, roomsStatus, dispatch, navigate]);
+  }, [id, isNewRoom, rooms, roomsStatus, dispatch]);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     if (name === "facilities") {
       setRoom((prevRoom) => ({
@@ -166,7 +171,7 @@ export default function EditRoom() {
           name="description"
           value={room.description || ""}
           onChange={handleChange}
-          rows="4"
+          rows={4}
           style={textareaStyle}
         />
       </div>
@@ -203,6 +208,7 @@ export default function EditRoom() {
     </div>
   );
 }
+
 const containerStyle = {
   padding: "20px",
   maxWidth: "600px",
@@ -226,7 +232,7 @@ const formGroupStyle = {
 const labelStyle = {
   display: "block",
   marginBottom: "5px",
-  fontWeight: "600",
+  fontWeight: 600,
   color: "#333",
 };
 
@@ -236,7 +242,7 @@ const inputStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
+  boxSizing: "border-box" as "border-box",
 };
 
 const selectStyle = {
@@ -245,7 +251,7 @@ const selectStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
+  boxSizing: "border-box" as "border-box",
 };
 
 const textareaStyle = {
@@ -254,8 +260,8 @@ const textareaStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
-  resize: "vertical",
+  boxSizing: "border-box" as "border-box",
+  resize: "vertical" as "vertical",
 };
 
 const saveButtonStyle = {

@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { CSSProperties } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,11 +10,14 @@ import {
   fetchBookings,
   selectBookingsStatus,
 } from "../../Components/Redux/Slice/bookingsSlice";
+import { AppDispatch } from "../../Components/Redux/store";
 
 export default function EditBooking() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const dispatch: AppDispatch = useDispatch();
+
   const isNewBooking = id === "new";
   const bookings = useSelector(selectAllBookings);
   const bookingStatus = useSelector(selectBookingsStatus);
@@ -27,23 +32,19 @@ export default function EditBooking() {
     status: "Pending",
     photo: "",
     id: "",
+    number: 0,
   });
 
   useEffect(() => {
-    console.log("Booking Status:", bookingStatus);
-    console.log("All Bookings:", bookings);
-    console.log("ID from Params:", id);
     if (bookingStatus === "idle") {
-      console.log("Fetching bookings...");
       dispatch(fetchBookings());
     } else if (bookingStatus === "succeeded") {
       if (!isNewBooking) {
         const foundBooking = bookings.find((b) => String(b.id) === String(id));
-        console.log("Found Booking:", foundBooking);
+
         if (foundBooking) {
           setBooking(foundBooking);
         } else {
-          console.error("Booking not found!");
           alert("Booking not found!");
           navigate("/bookings");
         }
@@ -51,7 +52,9 @@ export default function EditBooking() {
     }
   }, [id, isNewBooking, bookings, bookingStatus, dispatch, navigate]);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setBooking((prevBooking) => ({
       ...prevBooking,
@@ -126,7 +129,7 @@ export default function EditBooking() {
           name="specialRequest"
           value={booking.specialRequest || ""}
           onChange={handleChange}
-          rows="4"
+          rows={4}
           style={textareaStyle}
         />
       </div>
@@ -206,7 +209,7 @@ const formGroupStyle = {
 const labelStyle = {
   display: "block",
   marginBottom: "5px",
-  fontWeight: "600",
+  fontWeight: 600,
   color: "#333",
 };
 
@@ -216,7 +219,7 @@ const inputStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
+  boxSizing: "border-box" as "border-box",
 };
 
 const selectStyle = {
@@ -225,7 +228,7 @@ const selectStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
+  boxSizing: "border-box" as "border-box",
 };
 
 const textareaStyle = {
@@ -234,8 +237,8 @@ const textareaStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
-  resize: "vertical",
+  boxSizing: "border-box" as "border-box",
+  resize: "vertical" as "vertical",
 };
 
 const saveButtonStyle = {

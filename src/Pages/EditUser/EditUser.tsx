@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,26 +8,30 @@ import {
   fetchUsers,
   selectAllUsers,
 } from "../../Components/Redux/Slice/userSlice";
+import { AppDispatch } from "../../Components/Redux/store";
+import { User } from "../../Resources/Interface/users";
 
 export default function EditUser() {
-  const { username } = useParams();
+  const { username } = useParams<{ username: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const isNewUser = username === "new";
-
   const users = useSelector(selectAllUsers);
 
-  const userFromStore = users.find((u) => u.id === username);
+  const userFromStore = users.find((u) => u.username === username);
 
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     full_name: "",
     start_date: "",
     job_position: "",
+    job_description: "",
     phone: "",
-    status: "active",
+    status: "Active",
     image: "",
     username: "",
     id: "",
+    email: "",
+    password: "",
   });
 
   useEffect(() => {
@@ -40,7 +45,9 @@ export default function EditUser() {
     }
   }, [username, isNewUser, userFromStore, dispatch]);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
       ...prevUser,
@@ -113,8 +120,8 @@ export default function EditUser() {
               onChange={handleChange}
               style={selectStyle}
             >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
             </select>
           </div>
           <div style={formGroupStyle}>
@@ -161,7 +168,7 @@ const formGroupStyle = {
 const labelStyle = {
   display: "block",
   marginBottom: "5px",
-  fontWeight: "600",
+  fontWeight: 600,
   color: "#333",
 };
 
@@ -171,7 +178,7 @@ const inputStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
+  boxSizing: "border-box" as "border-box",
 };
 
 const selectStyle = {
@@ -180,7 +187,7 @@ const selectStyle = {
   fontSize: "16px",
   border: "1px solid #ddd",
   borderRadius: "4px",
-  boxSizing: "border-box",
+  boxSizing: "border-box" as "border-box",
 };
 
 const buttonStyle = {

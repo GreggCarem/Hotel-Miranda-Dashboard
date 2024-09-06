@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import { useAuth } from "../../Components/Redux/authContext";
+import { User } from "../../Resources/Interface/users";
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -64,20 +65,6 @@ const Button = styled.button`
   cursor: pointer;
   margin-top: 1rem;
 `;
-
-interface User {
-  id: string;
-  username: string;
-  password: string;
-  full_name: string;
-  job_position: string;
-  job_description: string;
-  email: string;
-  phone: string;
-  start_date: string;
-  status: "Active" | "Inactive";
-  image: string;
-}
 
 export default function LoginPage() {
   const [username, setUsername] = useState<string>("");

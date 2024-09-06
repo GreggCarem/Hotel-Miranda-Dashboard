@@ -4,6 +4,8 @@ import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Booking } from "../../Resources/Interface/booking";
+import { AppDispatch } from "../../Components/Redux/store";
 import {
   fetchBookings,
   deleteBooking,
@@ -13,27 +15,16 @@ import {
 } from "../../Components/Redux/Slice/bookingsSlice";
 import "./Booking.scss";
 
-interface Booking {
-  id: string;
-  guest: string;
-  orderDate: string;
-  checkIn: string;
-  checkOut: string;
-  specialRequest: string;
-  room_type: string;
-  status: string;
-  photo: string;
-}
-
 export default function Bookings() {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>("All");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const bookings: Booking[] = useSelector(selectAllBookings);
   const bookingStatus = useSelector(selectBookingsStatus);
   const error = useSelector(selectBookingsError);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (bookingStatus === "idle") {
@@ -57,15 +48,15 @@ export default function Bookings() {
   };
 
   const handleDelete = (id: string) => {
-    dispatch(deleteBooking(id)).then((response: any) => {
-      if (response.error) {
-        alert(`Failed to delete booking: ${response.error.message}`);
-      } else {
+    dispatch(deleteBooking(id))
+      .unwrap()
+      .then(() => {
         alert(`Booking ${id} deleted successfully.`);
-      }
-    });
+      })
+      .catch((error: any) => {
+        alert(`Failed to delete booking: ${error.message}`);
+      });
   };
-
   const handleCreate = () => {
     navigate("/edit-booking/new");
   };
