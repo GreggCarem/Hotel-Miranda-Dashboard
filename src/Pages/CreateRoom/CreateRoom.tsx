@@ -1,12 +1,24 @@
-import { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import "./CreateRoom.scss";
 
+interface RoomData {
+  photo: string;
+  roomNumber: string;
+  id: string;
+  bedType: string;
+  facilities: string[];
+  rate: string;
+  offerPrice: string;
+  status: string;
+  description: string;
+}
+
 export default function CreateRoom() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [roomData, setRoomData] = useState({
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [roomData, setRoomData] = useState<RoomData>({
     photo: "",
     roomNumber: "",
     id: "",
@@ -22,7 +34,9 @@ export default function CreateRoom() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setRoomData({
       ...roomData,
@@ -30,14 +44,14 @@ export default function CreateRoom() {
     });
   };
 
-  const handleFacilitiesChange = (e) => {
+  const handleFacilitiesChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRoomData({
       ...roomData,
       facilities: e.target.value.split(",").map((item) => item.trim()),
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setIsModalOpen(true);
   };
@@ -79,11 +93,11 @@ export default function CreateRoom() {
             className="input"
           />
 
-          <label className="label">Facilities: </label>
+          <label className="label">Facilities:</label>
           <input
             type="text"
             name="facilities"
-            value={roomData.facilities}
+            value={roomData.facilities.join(", ")}
             onChange={handleFacilitiesChange}
             className="input"
           />
@@ -120,7 +134,7 @@ export default function CreateRoom() {
             name="description"
             value={roomData.description}
             onChange={handleChange}
-            rows="4"
+            rows={4}
             className="textarea"
           />
 

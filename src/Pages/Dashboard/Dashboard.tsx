@@ -1,29 +1,34 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import { KPI } from "../../Components/KPI/KPI";
 import "./Dashboard.scss";
 
-export default function Dashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+const Dashboard: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setIsSidebarOpen((prevState) => !prevState);
   };
 
   return (
-    <div className="dashbaord-page">
+    <div className="dashboard-page">
       <SideBar isSidebarOpen={isSidebarOpen} />
 
       <HeaderMenu
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={toggleSidebar}
       />
+
       <div
-        className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+        className={`main-content ${
+          isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
       >
         <KPI />
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

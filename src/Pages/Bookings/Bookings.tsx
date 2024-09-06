@@ -1,8 +1,11 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Booking } from "../../Resources/Interface/booking";
+import { AppDispatch } from "../../Components/Redux/store";
 import {
   fetchBookings,
   deleteBooking,
@@ -13,14 +16,15 @@ import {
 import "./Booking.scss";
 
 export default function Bookings() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("All");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
 
-  const bookings = useSelector(selectAllBookings);
+  const bookings: Booking[] = useSelector(selectAllBookings);
   const bookingStatus = useSelector(selectBookingsStatus);
   const error = useSelector(selectBookingsError);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (bookingStatus === "idle") {
@@ -39,20 +43,20 @@ export default function Bookings() {
     return booking.status === selectedFilter;
   });
 
-  const handleEditClick = (id) => {
+  const handleEditClick = (id: string) => {
     navigate(`/edit-booking/${id}`);
   };
 
-  const handleDelete = (id) => {
-    dispatch(deleteBooking(id)).then((response) => {
-      if (response.error) {
-        alert(`Failed to delete booking: ${response.error.message}`);
-      } else {
+  const handleDelete = (id: string) => {
+    dispatch(deleteBooking(id))
+      .unwrap()
+      .then(() => {
         alert(`Booking ${id} deleted successfully.`);
-      }
-    });
+      })
+      .catch((error: any) => {
+        alert(`Failed to delete booking: ${error.message}`);
+      });
   };
-
   const handleCreate = () => {
     navigate("/edit-booking/new");
   };

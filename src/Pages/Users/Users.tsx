@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
@@ -10,18 +11,20 @@ import {
   selectUsersStatus,
   selectUsersError,
 } from "../../Components/Redux/Slice/userSlice";
+import { AppDispatch } from "../../Components/Redux/store";
+import { User } from "../../Resources/Interface/users";
 import "./Users.scss";
 
 export default function Users() {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const users = useSelector(selectAllUsers);
+  const users = useSelector(selectAllUsers) as User[];
   const userStatus = useSelector(selectUsersStatus);
   const error = useSelector(selectUsersError);
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [filter, setFilter] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [filter, setFilter] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     if (userStatus === "idle") {
@@ -50,8 +53,12 @@ export default function Users() {
       );
     });
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     dispatch(deleteUser(id));
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
   let content;
@@ -101,7 +108,7 @@ export default function Users() {
             ))
           ) : (
             <tr>
-              <td colSpan="7">No users found</td>
+              <td colSpan={7}>No users found</td>
             </tr>
           )}
         </tbody>
@@ -133,7 +140,7 @@ export default function Users() {
             type="text"
             placeholder="Search user..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
           />
           <button onClick={() => navigate("/edit-user/new")}>
             Create New User

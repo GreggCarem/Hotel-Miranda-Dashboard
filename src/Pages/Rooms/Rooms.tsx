@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
+import { Room } from "../../Resources/Interface/room";
+import { AppDispatch } from "../../Components/Redux/store";
 import {
   fetchRooms,
   selectAllRooms,
@@ -12,14 +14,15 @@ import {
 import "./Rooms.scss";
 
 export default function Rooms() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const rooms = useSelector(selectAllRooms);
+  const rooms: Room[] = useSelector(selectAllRooms);
   const roomsStatus = useSelector(selectRoomsStatus);
   const error = useSelector(selectRoomsError);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (roomsStatus === "idle") {
@@ -37,7 +40,7 @@ export default function Rooms() {
       room.bedType.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleEdit = (id) => {
+  const handleEdit = (id: number) => {
     navigate(`/edit-room/${id}`);
   };
 
