@@ -1,6 +1,4 @@
-import React from "react";
-import { CSSProperties } from "react";
-import { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,7 +13,6 @@ import { AppDispatch } from "../../Components/Redux/store";
 export default function EditBooking() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
   const dispatch: AppDispatch = useDispatch();
 
   const isNewBooking = id === "new";
@@ -31,23 +28,43 @@ export default function EditBooking() {
     room_type: "",
     status: "Pending",
     photo: "",
-    id: "",
-    number: 0,
+    _id: "",
+    totalAmount: 0,
+    endDate: "",
+    startDate: "",
+    roomId: {
+      _id: "",
+      roomNumber: "",
+    },
+    userId: {
+      _id: "",
+      full_name: "",
+      username: "",
+      email: "",
+      photo: "",
+    },
   });
 
   useEffect(() => {
     if (bookingStatus === "idle") {
       dispatch(fetchBookings());
-    } else if (bookingStatus === "succeeded") {
-      if (!isNewBooking) {
-        const foundBooking = bookings.find((b) => String(b.id) === String(id));
+    } else if (bookingStatus === "succeeded" && !isNewBooking) {
+      const foundBooking = bookings.find((b) => String(b._id) === String(id));
 
-        if (foundBooking) {
-          setBooking(foundBooking);
-        } else {
-          alert("Booking not found!");
-          navigate("/bookings");
-        }
+      if (foundBooking) {
+        setBooking({
+          ...foundBooking,
+          guest: foundBooking.userId.full_name,
+          orderDate: foundBooking.startDate,
+          checkIn: foundBooking.startDate,
+          checkOut: foundBooking.endDate,
+          room_type: foundBooking.roomId.bedType,
+          photo: foundBooking.userId.photo,
+          _id: foundBooking._id,
+        });
+      } else {
+        alert("Booking not found!");
+        navigate("/bookings");
       }
     }
   }, [id, isNewBooking, bookings, bookingStatus, dispatch, navigate]);
@@ -68,6 +85,10 @@ export default function EditBooking() {
         navigate("/bookings");
       });
     } else {
+      if (!booking._id) {
+        return;
+      }
+
       dispatch(updateBooking(booking)).then(() => {
         navigate("/bookings");
       });
@@ -88,7 +109,7 @@ export default function EditBooking() {
         <input
           type="text"
           name="guest"
-          value={booking.guest || ""}
+          value={booking.guest}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -98,7 +119,7 @@ export default function EditBooking() {
         <input
           type="date"
           name="orderDate"
-          value={booking.orderDate || ""}
+          value={booking.orderDate?.split("T")[0] || ""}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -108,7 +129,7 @@ export default function EditBooking() {
         <input
           type="date"
           name="checkIn"
-          value={booking.checkIn || ""}
+          value={booking.checkIn?.split("T")[0] || ""}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -118,7 +139,7 @@ export default function EditBooking() {
         <input
           type="date"
           name="checkOut"
-          value={booking.checkOut || ""}
+          value={booking.checkOut?.split("T")[0] || ""}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -127,18 +148,28 @@ export default function EditBooking() {
         <label style={labelStyle}>Special Request:</label>
         <textarea
           name="specialRequest"
-          value={booking.specialRequest || ""}
+          value={booking.specialRequest}
           onChange={handleChange}
           rows={4}
           style={textareaStyle}
         />
       </div>
       <div style={formGroupStyle}>
-        <label style={labelStyle}>Room Type:</label>
+        <label style={labelStyle}>Room Number:</label>
         <input
           type="text"
-          name="room_type"
-          value={booking.room_type || ""}
+          name="roomNumber"
+          value={booking.roomId.roomNumber}
+          onChange={handleChange}
+          style={inputStyle}
+        />
+      </div>
+      <div style={formGroupStyle}>
+        <label style={labelStyle}>Total Amount:</label>
+        <input
+          type="number"
+          name="totalAmount"
+          value={booking.totalAmount}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -147,7 +178,7 @@ export default function EditBooking() {
         <label style={labelStyle}>Status:</label>
         <select
           name="status"
-          value={booking.status || ""}
+          value={booking.status}
           onChange={handleChange}
           style={selectStyle}
         >
@@ -162,7 +193,7 @@ export default function EditBooking() {
         <input
           type="text"
           name="photo"
-          value={booking.photo || ""}
+          value={booking.photo}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -185,7 +216,6 @@ export default function EditBooking() {
     </div>
   );
 }
-
 const containerStyle = {
   padding: "20px",
   maxWidth: "600px",

@@ -57,7 +57,6 @@ export default function CreateRoom() {
   };
 
   const handleSave = () => {
-    console.log("Room data saved:", roomData);
     setIsModalOpen(false);
   };
 

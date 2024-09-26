@@ -34,16 +34,16 @@ export default function Rooms() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const filteredRooms = rooms.filter(
-    (room) =>
-      room.roomNumber.includes(searchTerm) ||
-      room.bedType.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleEdit = (id: number) => {
+  const filteredRooms = Array.isArray(rooms)
+    ? rooms.filter(
+        (room) =>
+          room.roomNumber.includes(searchTerm) ||
+          room.bedType.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
+  const handleEdit = (id: string) => {
     navigate(`/edit-room/${id}`);
   };
-
   const handleCreateNew = () => {
     navigate("/edit-room/new");
   };
@@ -59,7 +59,7 @@ export default function Rooms() {
           <tr>
             <th>Photo</th>
             <th>Room Number</th>
-            <th>ID</th>
+
             <th>Bed Type</th>
             <th>Facilities</th>
             <th>Rate</th>
@@ -70,7 +70,7 @@ export default function Rooms() {
         </thead>
         <tbody>
           {filteredRooms.map((room) => (
-            <tr key={room.id} onClick={() => handleEdit(room.id)}>
+            <tr key={room._id} onClick={() => handleEdit(room._id)}>
               <td>
                 <img
                   src={room.photo}
@@ -79,7 +79,7 @@ export default function Rooms() {
                 />
               </td>
               <td>{room.roomNumber}</td>
-              <td>{room.id}</td>
+
               <td>{room.bedType}</td>
               <td>{room.facilities.join(", ")}</td>
               <td>{room.rate}</td>

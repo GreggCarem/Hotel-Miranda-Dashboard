@@ -14,21 +14,31 @@ const initialState: RoomsState = {
   error: null,
 };
 
-export const fetchRooms = createAsyncThunk<Room[]>(
-  "rooms/fetchRooms",
-  async () => {
-    const response = await fetch("http://localhost:3000/rooms");
+const API_URL = "http://localhost:3018";
+
+export const fetchRooms = createAsyncThunk<
+  Room[],
+  void,
+  { rejectValue: string }
+>("rooms/fetchRooms", async (_, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/rooms`);
     if (!response.ok) {
       throw new Error("Failed to fetch rooms");
     }
-    return (await response.json()) as Room[];
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
   }
-);
-
-export const createRoom = createAsyncThunk<Room, Partial<Room>>(
-  "rooms/createRoom",
-  async (room) => {
-    const response = await fetch("http://localhost:3000/rooms", {
+});
+export const createRoom = createAsyncThunk<
+  Room,
+  Partial<Room>,
+  { rejectValue: string }
+>("rooms/createRoom", async (room, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/rooms`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,40 +51,51 @@ export const createRoom = createAsyncThunk<Room, Partial<Room>>(
     }
 
     return (await response.json()) as Room;
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
   }
-);
+});
 
-export const updateRoom = createAsyncThunk<Room, Room>(
+export const updateRoom = createAsyncThunk<Room, Room, { rejectValue: string }>(
   "rooms/updateRoom",
-  async (room) => {
-    const response = await fetch(`http://localhost:3000/rooms/${room.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(room),
-    });
+  async (room, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_URL}/rooms/${room._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(room),
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to update room");
+      if (!response.ok) {
+        throw new Error("Failed to update room");
+      }
+
+      return (await response.json()) as Room;
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
     }
-
-    return (await response.json()) as Room;
   }
 );
 
-export const deleteRoom = createAsyncThunk<number, number>(
-  "rooms/deleteRoom",
-  async (id) => {
-    const response = await fetch(`http://localhost:3000/rooms/${id}`, {
+export const deleteRoom = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>("rooms/deleteRoom", async (_id, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/rooms/${_id}`, {
       method: "DELETE",
     });
     if (!response.ok) {
       throw new Error("Failed to delete room");
     }
-    return id;
+    return _id;
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
   }
-);
+});
 
 const roomsSlice = createSlice({
   name: "rooms",
@@ -82,6 +103,7 @@ const roomsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+
       .addCase(fetchRooms.pending, (state) => {
         state.status = "loading";
       })
@@ -91,21 +113,33 @@ const roomsSlice = createSlice({
       })
       .addCase(fetchRooms.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || null;
+        state.error = action.payload || null;
       })
+
       .addCase(createRoom.fulfilled, (state, action: PayloadAction<Room>) => {
         state.rooms.push(action.payload);
       })
+      .addCase(createRoom.rejected, (state, action) => {
+        state.error = action.payload || null;
+      })
+
       .addCase(updateRoom.fulfilled, (state, action: PayloadAction<Room>) => {
         const index = state.rooms.findIndex(
-          (room) => room.id === action.payload.id
+          (room) => room._id === action.payload._id
         );
         if (index !== -1) {
           state.rooms[index] = action.payload;
         }
       })
-      .addCase(deleteRoom.fulfilled, (state, action: PayloadAction<number>) => {
-        state.rooms = state.rooms.filter((room) => room.id !== action.payload);
+      .addCase(updateRoom.rejected, (state, action) => {
+        state.error = action.payload || null;
+      })
+
+      .addCase(deleteRoom.fulfilled, (state, action: PayloadAction<string>) => {
+        state.rooms = state.rooms.filter((room) => room._id !== action.payload);
+      })
+      .addCase(deleteRoom.rejected, (state, action) => {
+        state.error = action.payload || null;
       });
   },
 });

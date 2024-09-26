@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,21 +17,26 @@ export default function EditUser() {
   const isNewUser = username === "new";
   const users = useSelector(selectAllUsers);
 
-  const userFromStore = users.find((u) => u.username === username);
+  const userFromStore = users.find((u) => u._id === username);
 
   const [user, setUser] = useState<User>({
+    _id: "",
     full_name: "",
     start_date: "",
-    job_position: "",
+    position: "",
     job_description: "",
     phone: "",
     status: "Active",
-    image: "",
+    photo: "",
     username: "",
-    id: "",
     email: "",
     password: "",
+    image: "",
+    entryDate: new Date().toISOString(),
+    job_position: "",
   });
+
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (!isNewUser && !userFromStore) {
@@ -40,7 +44,10 @@ export default function EditUser() {
     } else if (userFromStore) {
       setUser({
         ...userFromStore,
-        id: userFromStore.id || "",
+        _id: userFromStore._id || "",
+        position: userFromStore.position || "",
+        photo: userFromStore.photo || userFromStore.image || "",
+        password: "",
       });
     }
   }, [username, isNewUser, userFromStore, dispatch]);
@@ -55,21 +62,63 @@ export default function EditUser() {
     }));
   };
 
-  const handleSave = () => {
-    if (isNewUser) {
-      dispatch(createUser(user)).then(() => {
-        navigate("/users");
-      });
-    } else {
-      dispatch(updateUser(user)).then(() => {
-        navigate("/users");
-      });
+  const validateForm = () => {
+    if (
+      !user.full_name ||
+      !user.email ||
+      !user.position ||
+      !user.username ||
+      (isNewUser && !user.password)
+    ) {
+      setError(
+        "Please fill in all required fields: Full Name, Email, Position, Username, and Password (for new users)."
+      );
+      return false;
+    }
+    setError("");
+    return true;
+  };
+
+  const handleSave = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      if (isNewUser) {
+        const userToSave = { ...user };
+        delete userToSave._id;
+
+        const createdUser = await dispatch(createUser(userToSave)).unwrap();
+
+        await dispatch(fetchUsers());
+      } else {
+        if (!user._id) {
+          console.error("User ID is missing for update");
+          return;
+        }
+        await dispatch(updateUser(user)).unwrap();
+        await dispatch(fetchUsers());
+      }
+
+      navigate("/users");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Failed to save user:", error.message);
+      } else {
+        console.error("An unknown error occurred:", error);
+      }
     }
   };
+
+  if (!userFromStore && !isNewUser) {
+    return <div>Loading user data...</div>;
+  }
 
   return (
     <div style={containerStyle}>
       <h2 style={titleStyle}>{isNewUser ? "Create New User" : "Edit User"}</h2>
+      {error && <div style={errorStyle}>{error}</div>}{" "}
       {user && (
         <>
           <div style={formGroupStyle}>
@@ -83,21 +132,31 @@ export default function EditUser() {
             />
           </div>
           <div style={formGroupStyle}>
-            <label style={labelStyle}>Start Date:</label>
+            <label style={labelStyle}>Email:</label>
             <input
-              type="date"
-              name="start_date"
-              value={user.start_date || ""}
+              type="email"
+              name="email"
+              value={user.email || ""}
               onChange={handleChange}
               style={inputStyle}
             />
           </div>
           <div style={formGroupStyle}>
-            <label style={labelStyle}>Job Position:</label>
+            <label style={labelStyle}>Position:</label>
             <input
               type="text"
-              name="job_position"
-              value={user.job_position || ""}
+              name="position"
+              value={user.position || ""}
+              onChange={handleChange}
+              style={inputStyle}
+            />
+          </div>
+          <div style={formGroupStyle}>
+            <label style={labelStyle}>Username:</label>
+            <input
+              type="text"
+              name="username"
+              value={user.username || ""}
               onChange={handleChange}
               style={inputStyle}
             />
@@ -110,6 +169,21 @@ export default function EditUser() {
               value={user.phone || ""}
               onChange={handleChange}
               style={inputStyle}
+            />
+          </div>
+          <div style={formGroupStyle}>
+            <label style={labelStyle}>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={user.password || ""}
+              onChange={handleChange}
+              style={inputStyle}
+              placeholder={
+                isNewUser
+                  ? "Enter password"
+                  : "Leave blank to keep the current password"
+              }
             />
           </div>
           <div style={formGroupStyle}>
@@ -128,8 +202,8 @@ export default function EditUser() {
             <label style={labelStyle}>Photo URL:</label>
             <input
               type="text"
-              name="image"
-              value={user.image || ""}
+              name="photo"
+              value={user.photo || ""}
               onChange={handleChange}
               style={inputStyle}
             />
@@ -144,6 +218,11 @@ export default function EditUser() {
     </div>
   );
 }
+
+const errorStyle = {
+  color: "red",
+  marginBottom: "1rem",
+};
 
 const containerStyle = {
   padding: "20px",
@@ -190,17 +269,7 @@ const selectStyle = {
   boxSizing: "border-box" as "border-box",
 };
 
-const buttonStyle = {
-  padding: "10px 20px",
-  fontSize: "16px",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  marginRight: "10px",
-};
-
 const saveButtonStyle = {
-  ...buttonStyle,
   backgroundColor: "#007bff",
   color: "#fff",
 };

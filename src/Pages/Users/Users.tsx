@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
@@ -63,16 +62,14 @@ export default function Users() {
 
   let content;
 
-  if (userStatus === "loading") {
-    content = <p>Loading...</p>;
-  } else if (userStatus === "succeeded") {
+  if (userStatus === "succeeded") {
     content = (
       <table className="users-table">
         <thead>
           <tr>
             <th>Photo</th>
             <th>Full Name</th>
-            <th>Start Date</th>
+            <th>Entry Date</th>
             <th>Job Position</th>
             <th>Phone</th>
             <th>Status</th>
@@ -82,23 +79,35 @@ export default function Users() {
         <tbody>
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
-              <tr key={user.id || user.username}>
+              <tr key={user._id || user.username}>
                 <td>
                   <img
-                    src={user.image ? user.image.trim() : ""}
+                    src={user.photo ? user.photo.trim() : ""}
                     alt={user.full_name || "N/A"}
                     className="user-photo"
-                    onClick={() => navigate(`/edit-user/${user.id}`)}
+                    onClick={() => navigate(`/edit-user/${user._id}`)}
                   />
                 </td>
                 <td>{user.full_name || "N/A"}</td>
-                <td>{user.start_date || "N/A"}</td>
-                <td>{user.job_position || "N/A"}</td>
+
+                {/* Formatting the Entry Date */}
+                <td>
+                  {new Date(user.entryDate).toLocaleDateString() || "N/A"}
+                </td>
+
+                {/* Job Position */}
+                <td>{user.job_position || user.position || "N/A"}</td>
+
+                {/* Phone */}
                 <td>{user.phone || "N/A"}</td>
+
+                {/* Status */}
                 <td>{user.status || "N/A"}</td>
+
+                {/* Actions */}
                 <td>
                   <button
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(user._id)}
                     style={{ color: "red" }}
                   >
                     Delete
@@ -114,8 +123,6 @@ export default function Users() {
         </tbody>
       </table>
     );
-  } else if (userStatus === "failed") {
-    content = <p>{error}</p>;
   }
 
   return (

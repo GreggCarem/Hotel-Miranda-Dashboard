@@ -1,5 +1,8 @@
 export interface User {
-  id?: string;
+  entryDate: any;
+  position: string;
+  photo: string;
+  _id: string;
   username: string;
   password: string;
   full_name: string;

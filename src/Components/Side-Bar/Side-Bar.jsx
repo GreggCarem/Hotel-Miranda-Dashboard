@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import "./Side-Bar.scss";
-import UserLogin from "../../assets/users.json";
 import Spinner from "../../assets/Spinner.gif";
 import {
   LuLayoutDashboard,
@@ -20,6 +19,7 @@ export const SideBar = ({ isSidebarOpen }) => {
   const currentYear = new Date().getFullYear();
   const [showNewRoom, setShowRooms] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const toggleRooms = (e) => {
     e.preventDefault();
@@ -27,20 +27,37 @@ export const SideBar = ({ isSidebarOpen }) => {
   };
 
   useEffect(() => {
-    const loggedInUsername = localStorage.getItem("loggedInUsername");
-    const userData = loggedInUsername
-      ? UserLogin.find((user) => user.username === loggedInUsername)
-      : null;
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("authToken");
 
-    if (userData) {
-      setUser(userData);
-    } else {
-      console.log("No User");
-    }
-  }, []);
-  const handleCreateNew = () => {
-    navigate("/edit-room/new");
-  };
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3018/users/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+
+          setUser(userData);
+        } else {
+          localStorage.removeItem("authToken");
+          navigate("/login");
+        }
+      } catch (error) {
+        navigate("/login");
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
 
   return (
     <div className={`sidebar-container ${isSidebarOpen ? "open" : "closed"}`}>
@@ -92,11 +109,12 @@ export const SideBar = ({ isSidebarOpen }) => {
             <Link to="/users">Users</Link>
           </li>
         </ul>
+
         {user ? (
           <div className="user__info">
-            <img src={user.image} alt="User" className="user__photo" />
+            <img src={user.photo} alt="User" className="user__photo" />
             <div className="user__info__details">
-              <h3>{user.full_name}</h3>
+              <h3>{user.fullName}</h3>
               <p>{user.email}</p>
               <Link to={`/edit-user/${user.username}`}>
                 <button className="user__info__details__btn">Edit</button>
@@ -108,6 +126,7 @@ export const SideBar = ({ isSidebarOpen }) => {
             <img src={Spinner} alt="loading" />
           </div>
         )}
+
         <div className="sidebar__footer">
           <h3>Travel Hotel Admin Dashboard</h3>
           <h4>© {currentYear} All rights reserved.</h4>

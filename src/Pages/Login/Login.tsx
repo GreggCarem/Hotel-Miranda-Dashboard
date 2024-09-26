@@ -1,9 +1,8 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HotelLogo from "./../../assets/Logos/Hotel-Logo.jpeg";
 import { useAuth } from "../../Components/Redux/authContext";
-import { User } from "../../Resources/Interface/users";
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -66,31 +65,54 @@ const Button = styled.button`
   margin-top: 1rem;
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 1rem;
+  margin-top: 1rem;
+`;
+
 export default function LoginPage() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { dispatch } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `http://localhost:3000/users?username=${username}&password=${password}`
-      );
-      const users: User[] = await response.json();
+      const response = await fetch("http://localhost:3018/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-      if (users.length > 0) {
-        const user = users[0];
-        dispatch({ type: "LOGIN", payload: user });
-        localStorage.setItem("loggedInUsername", username);
-        alert("Welcome and good luck: " + user.full_name.toUpperCase());
-        navigate("/dashboard");
-      } else {
-        alert("Invalid credentials");
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
       }
+
+      const data = await response.json();
+      localStorage.setItem("authToken", data.token);
+
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          user: data.user,
+          token: data.token,
+        },
+      });
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Login error:", error);
+      setErrorMessage("Login failed. Please check your username and password.");
     }
   };
 
@@ -127,6 +149,7 @@ export default function LoginPage() {
             />
           </FormGroup>
           <Button type="submit">Login</Button>
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </Form>
       </Header>
     </LoginPageContainer>

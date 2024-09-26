@@ -14,57 +14,24 @@ const initialState: ContactsState = {
   error: null,
 };
 
-export const fetchContacts = createAsyncThunk<Contact[]>(
-  "contacts/fetchContacts",
-  async () => {
-    const response = await fetch("http://localhost:3000/reviews");
+const API_URL = "http://localhost:3018";
+
+export const fetchContacts = createAsyncThunk<
+  Contact[],
+  void,
+  { rejectValue: string }
+>("contacts/fetchContacts", async (_, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${API_URL}/contacts`);
     if (!response.ok) {
       throw new Error("Failed to fetch contacts");
     }
-    return (await response.json()) as Contact[];
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
   }
-);
-
-export const createContact = createAsyncThunk<Contact, Omit<Contact, "id">>(
-  "contacts/createContact",
-  async (newContact) => {
-    const response = await fetch("http://localhost:3000/reviews", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newContact),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to create contact");
-    }
-
-    return (await response.json()) as Contact;
-  }
-);
-
-export const deleteContact = createAsyncThunk<string, string>(
-  "contacts/deleteContact",
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`http://localhost:3000/reviews/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete contact: ${response.statusText}`);
-      }
-
-      return id;
-    } catch (err) {
-      if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      }
-      return rejectWithValue("An unknown error occurred");
-    }
-  }
-);
+});
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -84,22 +51,8 @@ const contactsSlice = createSlice({
       )
       .addCase(fetchContacts.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || null;
-      })
-      .addCase(
-        createContact.fulfilled,
-        (state, action: PayloadAction<Contact>) => {
-          state.contacts.push(action.payload);
-        }
-      )
-      .addCase(
-        deleteContact.fulfilled,
-        (state, action: PayloadAction<string>) => {
-          state.contacts = state.contacts.filter(
-            (contact) => contact.id !== action.payload
-          );
-        }
-      );
+        state.error = action.payload || null;
+      });
   },
 });
 

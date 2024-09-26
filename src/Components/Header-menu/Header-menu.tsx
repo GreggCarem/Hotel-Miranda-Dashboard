@@ -8,6 +8,8 @@ import {
   HiOutlineBell,
   MdOutlineKeyboardDoubleArrowRight,
 } from "../React-Icons";
+import React from "react";
+import { useAuth } from "../../Components/Redux/authContext";
 
 interface HeaderMenuProps {
   onToggleSidebar: () => void;
@@ -92,13 +94,16 @@ export const HeaderMenu: React.FC<HeaderMenuProps> = ({
   const [unreadMessages] = useState<number>(5);
   const [currentMonthReservations] = useState<number>(12);
 
+  const { dispatch } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    if (window.confirm("Are you sure you want to logout?")) {
-      localStorage.removeItem("loggedInUsername");
-      navigate("/");
-    }
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("loggedInUsername");
+
+    dispatch({ type: "LOGOUT" });
+
+    navigate("/");
   };
 
   return (

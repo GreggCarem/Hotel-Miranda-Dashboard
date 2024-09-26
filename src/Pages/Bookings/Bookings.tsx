@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { HeaderMenu } from "../../Components/Header-menu/Header-menu";
 import { SideBar } from "../../Components/Side-Bar/Side-Bar";
 import { useNavigate } from "react-router-dom";
@@ -71,43 +70,37 @@ export default function Bookings() {
         <thead>
           <tr>
             <th>Guest</th>
-            <th>Order Date</th>
-            <th>Check In</th>
-            <th>Check Out</th>
-            <th>Special Request</th>
-            <th>Room Type</th>
+            <th>Room Number</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Amount</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredBookings.map((booking) => (
-            <tr key={booking.id}>
+            <tr key={booking._id}>
               <td className="image__text__column">
                 <img
-                  src={booking.photo}
-                  alt={`Guest ${booking.guest}`}
+                  src={booking.userId.photo || "default-avatar-url"}
+                  alt={`Guest ${booking.userId.full_name}`}
                   className="guest-photo"
-                  onClick={() => handleEditClick(booking.id)}
+                  onClick={() => handleEditClick(String(booking._id))}
                   style={{ cursor: "pointer" }}
                 />
                 <div className="text">
-                  <h1>{booking.guest}</h1>
+                  <h1>{booking.userId.full_name}</h1>
                 </div>
               </td>
-              <td>{booking.orderDate}</td>
-              <td>{booking.checkIn}</td>
-              <td>{booking.checkOut}</td>
-              <td>
-                <button onClick={() => window.alert(booking.specialRequest)}>
-                  View Notes
-                </button>
-              </td>
-              <td>{booking.room_type}</td>
+              <td>{booking.roomId.roomNumber}</td>
+              <td>{new Date(booking.startDate).toLocaleDateString()}</td>
+              <td>{new Date(booking.endDate).toLocaleDateString()}</td>
+              <td>${booking.totalAmount}</td>
               <td>{booking.status}</td>
               <td>
                 <button
-                  onClick={() => handleDelete(booking.id)}
+                  onClick={() => handleDelete(String(booking._id))}
                   style={{ color: "red" }}
                 >
                   Delete
@@ -137,11 +130,12 @@ export default function Bookings() {
         <div className="filter-buttons">
           <button onClick={() => setSelectedFilter("All")}>All</button>
           <button onClick={() => setSelectedFilter("Pending")}>Pending</button>
-          <button onClick={() => setSelectedFilter("Booked")}>Booked</button>
+          <button onClick={() => setSelectedFilter("Confirmed")}>
+            Confirmed
+          </button>
           <button onClick={() => setSelectedFilter("Cancelled")}>
             Cancelled
           </button>
-          <button onClick={() => setSelectedFilter("Refund")}>Refund</button>
           <button
             onClick={handleCreate}
             style={{ backgroundColor: "#007bff", color: "#fff" }}
